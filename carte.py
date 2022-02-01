@@ -13,4 +13,16 @@ def carte_to_chaine(dic_carte):
         return " {}{}".format(dic_carte['valeur'],couleur)
 
 
-print(carte_to_chaine({'valeur':'A', 'couleur':'P'}))
+def afficher_reussite(liste_carte):
+    for carte in liste_carte:
+        print(carte_to_chaine(carte), end=" ")
+    print("\n")
+
+
+def init_pioche_fichier(fichier_carte):
+    fichier = open(fichier_carte, "r").read()
+    return fichier.split(" ")
+
+
+afficher_reussite([{'valeur':7, 'couleur':'P'},{'valeur':10, 'couleur':'K'},{'valeur':'A', 'couleur':'T'}])
+print(init_pioche_fichier("data_init.txt"))
