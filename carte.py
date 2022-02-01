@@ -7,10 +7,10 @@ def carte_to_chaine(dic_carte):
         couleur = chr(9826)
     elif dic_carte['couleur']=='T':
         couleur = chr(9827)
-    if dic_carte['valeur']>10:
+    if str(dic_carte['valeur'])=='10':
         return "{}{}".format(dic_carte['valeur'],couleur)
     else:
         return " {}{}".format(dic_carte['valeur'],couleur)
 
 
-print(carte_to_chaine({'valeur':'R', 'couleur':'P'}))
+print(carte_to_chaine({'valeur':'A', 'couleur':'P'}))
