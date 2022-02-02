@@ -1,4 +1,5 @@
 import random
+import shutil
 
 def carte_to_chaine(dic_carte):
     if dic_carte['couleur']=='P':
@@ -117,11 +118,13 @@ def verification_possible_saut(liste_tas):
             return True
 
 
-def une_etape_reussite(liste_tas, pioche, affiche=False):
-    ### a revoir ###
+def retourner_carte(liste_tas, pioche):
     carte = pioche[0]
     del pioche[0]
     liste_tas.append(carte)
+
+def une_etape_reussite(liste_tas, pioche, affiche=False):
+    ### a revoir ###
     if affiche:
         afficher_reussite(liste_tas)
     saut = saut_si_possible(liste_tas, len(liste_tas)-2)
@@ -141,7 +144,33 @@ def reussite_mode_auto(pioche, affiche=False):
     return liste_tas
 
 
+def reussite_mode_manuel(pioche, nb_as_max=2):
+    ### definition des donnee ###
+    #liste
+    liste_tas = []
+    pioche_tas = list(pioche)
 
+    ### Programme de la fonction ###
+    while pioche_tas!=[]:
+        action = input("\n\n#######################################################\nRetourner une carte (taper 1)\nSaisir un saut (taper2)\nQuiter (taper Q)\n#######################################################\n\n\n")
+        if action == '1':
+            retourner_carte(liste_tas, pioche_tas)
+        elif action == '2':
+            print(" 0   1   2   3   4   5  ...")
+            afficher_reussite(liste_tas)
+            num = int(input("Quel tas voulez-vous faire sauter (entrer un numero, on commence par 0): "))
+            possible = saut_si_possible(liste_tas, num)
+            if not possible:
+                print('Impossible de faire sauter le tas numero {}'.format(num))
+        elif action == 'Q':
+            for carte in pioche_tas:
+                liste_tas.append(carte)
+            pioche_tas=[]
+        afficher_reussite(liste_tas)
+    if len(liste_tas)<=2:
+        print("Gagner")
+    else:
+        print("Perdu")
 
 #afficher_reussite([{'valeur':7, 'couleur':'P'},{'valeur':10, 'couleur':'K'},{'valeur':'A', 'couleur':'T'}])
 #print(init_pioche_fichier("data_init.txt"))
@@ -168,4 +197,5 @@ pioche = init_pioche_alea()
 #print(saut_si_possible(liste, 1))
 #print(liste)
 #une_etape_reussite(liste, pioche, affiche=True)
-afficher_reussite(reussite_mode_auto(pioche, affiche=True))
+#afficher_reussite(reussite_mode_auto(pioche, affiche=True))
+reussite_mode_manuel(pioche)
