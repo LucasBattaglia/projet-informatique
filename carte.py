@@ -144,12 +144,11 @@ def reussite_mode_auto(pioche, affiche=False):
     return liste_tas
 
 
-def reussite_mode_manuel(pioche, nb_as_max=2):
+def reussite_mode_manuel(pioche, nb_tas_max=2):
     ### definition des donnee ###
     #liste
     liste_tas = []
     pioche_tas = list(pioche)
-
     ### Programme de la fonction ###
     while pioche_tas!=[]:
         action = input("\n\n#######################################################\nRetourner une carte (taper 1)\nSaisir un saut (taper2)\nQuiter (taper Q)\n#######################################################\n\n\n")
@@ -167,11 +166,20 @@ def reussite_mode_manuel(pioche, nb_as_max=2):
                 liste_tas.append(carte)
             pioche_tas=[]
         afficher_reussite(liste_tas)
-    if len(liste_tas)<=2:
+    if len(liste_tas)<=nb_tas_max:
         print("Gagner")
     else:
         print("Perdu")
+    return liste_tas
 
+
+def lance_reussite(mode, nb_cartes=32, affiche=False, nb_tas_max=2):
+    pioche = init_pioche_alea(nb_cartes)
+    if mode == 'auto':
+        liste_tas = reussite_mode_auto(pioche, affiche)
+    elif mode == 'manuel':
+        liste_tas = reussite_mode_manuel(pioche,nb_tas_max)
+    return liste_tas
 #afficher_reussite([{'valeur':7, 'couleur':'P'},{'valeur':10, 'couleur':'K'},{'valeur':'A', 'couleur':'T'}])
 #print(init_pioche_fichier("data_init.txt"))
 #ecrire_fichier_reussite('teste.txt', [{'valeur': 'V', 'couleur': 'C'}, {'valeur': '8', 'couleur': 'P'},
@@ -190,7 +198,7 @@ def reussite_mode_manuel(pioche, nb_as_max=2):
 #                                      {'valeur': 'D', 'couleur': 'C'}, {'valeur': 'A', 'couleur': 'K'},
 #                                      {'valeur': 'D', 'couleur': 'P'}, {'valeur': '10', 'couleur': 'T'},
 #                                      {'valeur': 'R', 'couleur': 'K'}, {'valeur': 'R', 'couleur': 'P'}])
-pioche = init_pioche_alea()
+#pioche = init_pioche_alea()
 #print(alliance({'valeur': '7', 'couleur': 'K'}, {'valeur': 'A', 'couleur': 'K'}))
 #liste = [{'valeur': '7', 'couleur': 'K'}, {'valeur': '8', 'couleur': 'P'}, {'valeur': 'A', 'couleur': 'K'}]
 #print(liste)
@@ -198,4 +206,5 @@ pioche = init_pioche_alea()
 #print(liste)
 #une_etape_reussite(liste, pioche, affiche=True)
 #afficher_reussite(reussite_mode_auto(pioche, affiche=True))
-reussite_mode_manuel(pioche)
+#reussite_mode_manuel(pioche)
+print(lance_reussite('manuel'))
