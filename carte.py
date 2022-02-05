@@ -1,28 +1,44 @@
+#importation des bibliotheque de Python
 import random
-import shutil
+
 
 def carte_to_chaine(dic_carte):
-    if dic_carte['couleur']=='P':
+    """
+
+    :param dic_carte:
+    :return:
+    """
+    if dic_carte['couleur'] == 'P':
         couleur = chr(9824)
-    elif dic_carte['couleur']=='C':
+    elif dic_carte['couleur'] == 'C':
         couleur = chr(9825)
-    elif dic_carte['couleur']=='K':
+    elif dic_carte['couleur'] == 'K':
         couleur = chr(9826)
-    elif dic_carte['couleur']=='T':
+    elif dic_carte['couleur'] == 'T':
         couleur = chr(9827)
-    if str(dic_carte['valeur'])=='10':
-        return "{}{}".format(dic_carte['valeur'],couleur)
+    if str(dic_carte['valeur']) == '10':
+        return "{}{}".format(dic_carte['valeur'], couleur)
     else:
-        return " {}{}".format(dic_carte['valeur'],couleur)
+        return " {}{}".format(dic_carte['valeur'], couleur)
 
 
 def afficher_reussite(liste_carte):
+    """
+
+    :param liste_carte:
+    :return:
+    """
     for carte in liste_carte:
         print(carte_to_chaine(carte), end=" ")
     print("\n")
 
 
 def init_pioche_fichier(fichier_carte):
+    """
+
+    :param fichier_carte:
+    :return:
+    """
     liste = []
     f = open(fichier_carte, "r")
     fichier = f.read()
@@ -30,11 +46,17 @@ def init_pioche_fichier(fichier_carte):
     fichier = fichier.split(" ")
     for carte in fichier:
         carte = carte.split("-")
-        liste.append({'valeur':carte[0], 'couleur':carte[1]})
+        liste.append({'valeur': carte[0], 'couleur': carte[1]})
     return liste
 
 
 def ecrire_fichier_reussite(nom_fich, liste_carte):
+    """
+
+    :param nom_fich:
+    :param liste_carte:
+    :return:
+    """
     f = open(nom_fich, 'w')
     for carte in liste_carte:
         f.write("{}-{} ".format(carte['valeur'], carte['couleur']))
@@ -42,76 +64,62 @@ def ecrire_fichier_reussite(nom_fich, liste_carte):
 
 
 def init_pioche_alea(nb_carte=32):
+    """
+
+    :param nb_carte:
+    :return:
+    """
+    liste_carte = []
+    liste_couleur = ['C', 'K', 'P', 'T']
     if nb_carte == 32:
-        liste_carte = [{'valeur': '7', 'couleur': 'C'}, {'valeur': '8', 'couleur': 'C'},
-                       {'valeur': '9', 'couleur': 'C'}, {'valeur': '10', 'couleur': 'C'},
-                       {'valeur': 'V', 'couleur': 'C'}, {'valeur': 'D', 'couleur': 'C'},
-                       {'valeur': 'R', 'couleur': 'C'}, {'valeur': 'A', 'couleur': 'C'},
-                       {'valeur': '7', 'couleur': 'K'}, {'valeur': '8', 'couleur': 'K'},
-                       {'valeur': '9', 'couleur': 'K'}, {'valeur': '10', 'couleur': 'K'},
-                       {'valeur': 'V', 'couleur': 'K'}, {'valeur': 'D', 'couleur': 'K'},
-                       {'valeur': 'R', 'couleur': 'K'}, {'valeur': 'A', 'couleur': 'K'},
-                       {'valeur': '7', 'couleur': 'P'}, {'valeur': '8', 'couleur': 'P'},
-                       {'valeur': '9', 'couleur': 'P'}, {'valeur': '10', 'couleur': 'P'},
-                       {'valeur': 'V', 'couleur': 'P'}, {'valeur': 'D', 'couleur': 'P'},
-                       {'valeur': 'R', 'couleur': 'P'}, {'valeur': 'A', 'couleur': 'P'},
-                       {'valeur': '7', 'couleur': 'T'}, {'valeur': '8', 'couleur': 'T'},
-                       {'valeur': '9', 'couleur': 'T'}, {'valeur': '10', 'couleur': 'T'},
-                       {'valeur': 'V', 'couleur': 'T'}, {'valeur': 'D', 'couleur': 'T'},
-                       {'valeur': 'R', 'couleur': 'T'}, {'valeur': 'A', 'couleur': 'T'}]
+        liste_valeur = ['7', '8', '9', '10', 'V', 'D', 'R', 'A']
     elif nb_carte == 52:
-        liste_carte = [{'valeur': '2', 'couleur': 'C'}, {'valeur': '3', 'couleur': 'C'},
-                       {'valeur': '4', 'couleur': 'C'}, {'valeur': '5', 'couleur': 'C'},
-                       {'valeur': '6', 'couleur': 'C'}, {'valeur': '7', 'couleur': 'C'},
-                       {'valeur': '7', 'couleur': 'C'}, {'valeur': '8', 'couleur': 'C'},
-                       {'valeur': '9', 'couleur': 'C'}, {'valeur': '10', 'couleur': 'C'},
-                       {'valeur': 'V', 'couleur': 'C'}, {'valeur': 'D', 'couleur': 'C'},
-                       {'valeur': 'R', 'couleur': 'C'}, {'valeur': 'A', 'couleur': 'C'},
-                       {'valeur': '2', 'couleur': 'K'}, {'valeur': '3', 'couleur': 'K'},
-                       {'valeur': '4', 'couleur': 'K'}, {'valeur': '5', 'couleur': 'K'},
-                       {'valeur': '6', 'couleur': 'K'}, {'valeur': '7', 'couleur': 'K'},
-                       {'valeur': '7', 'couleur': 'K'}, {'valeur': '8', 'couleur': 'K'},
-                       {'valeur': '9', 'couleur': 'K'}, {'valeur': '10', 'couleur': 'K'},
-                       {'valeur': 'V', 'couleur': 'K'}, {'valeur': 'D', 'couleur': 'K'},
-                       {'valeur': 'R', 'couleur': 'K'}, {'valeur': 'A', 'couleur': 'K'},
-                       {'valeur': '2', 'couleur': 'P'}, {'valeur': '3', 'couleur': 'P'},
-                       {'valeur': '4', 'couleur': 'P'}, {'valeur': '5', 'couleur': 'P'},
-                       {'valeur': '6', 'couleur': 'P'}, {'valeur': '7', 'couleur': 'P'},
-                       {'valeur': '7', 'couleur': 'P'}, {'valeur': '8', 'couleur': 'P'},
-                       {'valeur': '9', 'couleur': 'P'}, {'valeur': '10', 'couleur': 'P'},
-                       {'valeur': 'V', 'couleur': 'P'}, {'valeur': 'D', 'couleur': 'P'},
-                       {'valeur': 'R', 'couleur': 'P'}, {'valeur': 'A', 'couleur': 'P'},
-                       {'valeur': '2', 'couleur': 'T'}, {'valeur': '3', 'couleur': 'T'},
-                       {'valeur': '4', 'couleur': 'T'}, {'valeur': '5', 'couleur': 'T'},
-                       {'valeur': '6', 'couleur': 'T'}, {'valeur': '7', 'couleur': 'T'},
-                       {'valeur': '7', 'couleur': 'T'}, {'valeur': '8', 'couleur': 'T'},
-                       {'valeur': '9', 'couleur': 'T'}, {'valeur': '10', 'couleur': 'T'},
-                       {'valeur': 'V', 'couleur': 'T'}, {'valeur': 'D', 'couleur': 'T'},
-                       {'valeur': 'R', 'couleur': 'T'}, {'valeur': 'A', 'couleur': 'T'}]
+        liste_valeur = ['A', '2', '3', '4', '5', '6', '7', '8', '9', '10', 'V', 'D', 'R']
+    for couleur in liste_couleur:
+        for valeur in liste_valeur:
+            liste_carte.append({'valeur': valeur, 'couleur': couleur})
+    afficher_reussite(liste_carte)
     random.shuffle(liste_carte)
     return liste_carte
 
 
 def alliance(carte1, carte2):
-    if carte1['valeur']==carte2['valeur'] or carte1['couleur']==carte2['couleur']:
+    """
+
+    :param carte1:
+    :param carte2:
+    :return:
+    """
+    if carte1['valeur'] == carte2['valeur'] or carte1['couleur'] == carte2['couleur']:
         return True
     else:
         return False
 
 
 def saut_si_possible(liste_tas, num_tas):
-    if num_tas<1 or num_tas==len(liste_tas)-1:
+    """
+
+    :param liste_tas:
+    :param num_tas:
+    :return:
+    """
+    if num_tas < 1 or num_tas == len(liste_tas) - 1:
         return False
     carte1 = liste_tas[num_tas - 1]
     carte2 = liste_tas[num_tas + 1]
     if alliance(carte1, carte2):
-        del liste_tas[num_tas-1]
+        del liste_tas[num_tas - 1]
         return True
     else:
         return False
 
 
 def verification_possible_saut(liste_tas):
+    """
+
+    :param liste_tas:
+    :return:
+    """
     for carte in range(len(liste_tas) - 1):
         possible = saut_si_possible(liste_tas, carte + 1)
         if possible:
@@ -119,39 +127,69 @@ def verification_possible_saut(liste_tas):
 
 
 def retourner_carte(liste_tas, pioche):
+    """
+
+    :param liste_tas:
+    :param pioche:
+    :return:
+    """
     carte = pioche[0]
     del pioche[0]
     liste_tas.append(carte)
 
+
 def une_etape_reussite(liste_tas, pioche, affiche=False):
-    ### a revoir ###
+    """
+
+    :param liste_tas:
+    :param pioche:
+    :param affiche:
+    :return:
+    """
+    # a revoir
+    liste_tas.append(pioche[0])
+    del pioche[0]
     if affiche:
         afficher_reussite(liste_tas)
-    saut = saut_si_possible(liste_tas, len(liste_tas)-2)
+    saut = saut_si_possible(liste_tas, len(liste_tas) - 2)
     while saut:
         saut = False
         if affiche:
             afficher_reussite(liste_tas)
         saut = verification_possible_saut(liste_tas)
 
+
 def reussite_mode_auto(pioche, affiche=False):
+    """
+
+    :param pioche:
+    :param affiche:
+    :return:
+    """
     if affiche:
         afficher_reussite(pioche)
     pioche_tas = list(pioche)
     liste_tas = []
-    while pioche_tas!=[]:
+    while pioche_tas != []:
         une_etape_reussite(liste_tas, pioche_tas, affiche=affiche)
     return liste_tas
 
 
 def reussite_mode_manuel(pioche, nb_tas_max=2):
-    ### definition des donnee ###
-    #liste
+    """
+
+    :param pioche:
+    :param nb_tas_max:
+    :return:
+    """
+    # definition des donnee
     liste_tas = []
     pioche_tas = list(pioche)
-    ### Programme de la fonction ###
-    while pioche_tas!=[]:
-        action = input("\n\n#######################################################\nRetourner une carte (taper 1)\nSaisir un saut (taper2)\nQuiter (taper Q)\n#######################################################\n\n\n")
+    # Programme de la fonction
+    while pioche_tas != []:
+        action = input(
+            "\n\n#######################################################\nRetourner une carte (taper 1)\nSaisir un "
+            "saut (taper2)\nQuitter (taper Q)\n#######################################################\n\n\n")
         if action == '1':
             retourner_carte(liste_tas, pioche_tas)
         elif action == '2':
@@ -164,9 +202,9 @@ def reussite_mode_manuel(pioche, nb_tas_max=2):
         elif action == 'Q':
             for carte in pioche_tas:
                 liste_tas.append(carte)
-            pioche_tas=[]
+            pioche_tas = []
         afficher_reussite(liste_tas)
-    if len(liste_tas)<=nb_tas_max:
+    if len(liste_tas) <= nb_tas_max:
         print("Gagner")
     else:
         print("Perdu")
@@ -174,15 +212,25 @@ def reussite_mode_manuel(pioche, nb_tas_max=2):
 
 
 def lance_reussite(mode, nb_cartes=32, affiche=False, nb_tas_max=2):
+    """
+
+    :param mode:
+    :param nb_cartes:
+    :param affiche:
+    :param nb_tas_max:
+    :return:
+    """
     pioche = init_pioche_alea(nb_cartes)
     if mode == 'auto':
         liste_tas = reussite_mode_auto(pioche, affiche)
     elif mode == 'manuel':
-        liste_tas = reussite_mode_manuel(pioche,nb_tas_max)
+        liste_tas = reussite_mode_manuel(pioche, nb_tas_max)
     return liste_tas
-#afficher_reussite([{'valeur':7, 'couleur':'P'},{'valeur':10, 'couleur':'K'},{'valeur':'A', 'couleur':'T'}])
-#print(init_pioche_fichier("data_init.txt"))
-#ecrire_fichier_reussite('teste.txt', [{'valeur': 'V', 'couleur': 'C'}, {'valeur': '8', 'couleur': 'P'},
+
+
+# afficher_reussite([{'valeur':7, 'couleur':'P'},{'valeur':10, 'couleur':'K'},{'valeur':'A', 'couleur':'T'}])
+# print(init_pioche_fichier("data_init.txt"))
+# ecrire_fichier_reussite('teste.txt', [{'valeur': 'V', 'couleur': 'C'}, {'valeur': '8', 'couleur': 'P'},
 #                                      {'valeur': 'V', 'couleur': 'K'}, {'valeur': 'A', 'couleur': 'C'},
 #                                      {'valeur': '10', 'couleur': 'P'}, {'valeur': '8', 'couleur': 'T'},
 #                                      {'valeur': '8', 'couleur': 'K'}, {'valeur': '9', 'couleur': 'T'},
@@ -198,13 +246,13 @@ def lance_reussite(mode, nb_cartes=32, affiche=False, nb_tas_max=2):
 #                                      {'valeur': 'D', 'couleur': 'C'}, {'valeur': 'A', 'couleur': 'K'},
 #                                      {'valeur': 'D', 'couleur': 'P'}, {'valeur': '10', 'couleur': 'T'},
 #                                      {'valeur': 'R', 'couleur': 'K'}, {'valeur': 'R', 'couleur': 'P'}])
-#pioche = init_pioche_alea()
-#print(alliance({'valeur': '7', 'couleur': 'K'}, {'valeur': 'A', 'couleur': 'K'}))
-#liste = [{'valeur': '7', 'couleur': 'K'}, {'valeur': '8', 'couleur': 'P'}, {'valeur': 'A', 'couleur': 'K'}]
-#print(liste)
-#print(saut_si_possible(liste, 1))
-#print(liste)
-#une_etape_reussite(liste, pioche, affiche=True)
-#afficher_reussite(reussite_mode_auto(pioche, affiche=True))
-#reussite_mode_manuel(pioche)
-print(lance_reussite('manuel'))
+# pioche = init_pioche_alea()
+# print(alliance({'valeur': '7', 'couleur': 'K'}, {'valeur': 'A', 'couleur': 'K'}))
+# liste = [{'valeur': '7', 'couleur': 'K'}, {'valeur': '8', 'couleur': 'P'}, {'valeur': 'A', 'couleur': 'K'}]
+# print(liste)
+# print(saut_si_possible(liste, 1))
+# print(liste)
+# une_etape_reussite(liste, pioche, affiche=True)
+# afficher_reussite(reussite_mode_auto(pioche, affiche=True))
+# reussite_mode_manuel(pioche)
+#afficher_reussite(lance_reussite('auto', nb_cartes=52))
