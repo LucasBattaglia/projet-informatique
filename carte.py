@@ -1,4 +1,6 @@
-#importation des bibliotheque de Python
+#!/usr/bin/env python3
+
+# importation des bibliotheque de Python
 import random
 
 
@@ -153,7 +155,6 @@ def une_etape_reussite(liste_tas, pioche, affiche=False):
         afficher_reussite(liste_tas)
     saut = saut_si_possible(liste_tas, len(liste_tas) - 2)
     while saut:
-        saut = False
         if affiche:
             afficher_reussite(liste_tas)
         saut = verification_possible_saut(liste_tas)
@@ -193,7 +194,11 @@ def reussite_mode_manuel(pioche, nb_tas_max=2):
         if action == '1':
             retourner_carte(liste_tas, pioche_tas)
         elif action == '2':
-            print(" 0   1   2   3   4   5  ...")
+            for i in range(len(liste_tas)):
+                if i < 10 or i%10==0:
+                    print(" ", end="")
+                print(' {} '.format(i), end='')
+            print("")
             afficher_reussite(liste_tas)
             num = int(input("Quel tas voulez-vous faire sauter (entrer un numero, on commence par 0): "))
             possible = saut_si_possible(liste_tas, num)
@@ -227,7 +232,6 @@ def lance_reussite(mode, nb_cartes=32, affiche=False, nb_tas_max=2):
         liste_tas = reussite_mode_manuel(pioche, nb_tas_max)
     return liste_tas
 
-
 # afficher_reussite([{'valeur':7, 'couleur':'P'},{'valeur':10, 'couleur':'K'},{'valeur':'A', 'couleur':'T'}])
 # print(init_pioche_fichier("data_init.txt"))
 # ecrire_fichier_reussite('teste.txt', [{'valeur': 'V', 'couleur': 'C'}, {'valeur': '8', 'couleur': 'P'},
@@ -255,4 +259,4 @@ def lance_reussite(mode, nb_cartes=32, affiche=False, nb_tas_max=2):
 # une_etape_reussite(liste, pioche, affiche=True)
 # afficher_reussite(reussite_mode_auto(pioche, affiche=True))
 # reussite_mode_manuel(pioche)
-#afficher_reussite(lance_reussite('auto', nb_cartes=52))
+afficher_reussite(lance_reussite('manuel', nb_cartes=52))
