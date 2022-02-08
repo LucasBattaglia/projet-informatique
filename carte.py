@@ -2,6 +2,7 @@
 
 # importation des bibliotheque de Python
 import random
+from time import *
 
 
 def carte_to_chaine(dic_carte):
@@ -153,10 +154,12 @@ def une_etape_reussite(liste_tas, pioche, affiche=False):
     del pioche[0]
     if affiche:
         afficher_reussite(liste_tas)
+        sleep(5)
     saut = saut_si_possible(liste_tas, len(liste_tas) - 2)
     while saut:
         if affiche:
             afficher_reussite(liste_tas)
+            sleep(5)
         saut = verification_possible_saut(liste_tas)
 
 
@@ -169,9 +172,10 @@ def reussite_mode_auto(pioche, affiche=False):
     """
     if affiche:
         afficher_reussite(pioche)
+        sleep(5)
     pioche_tas = list(pioche)
     liste_tas = []
-    while pioche_tas != []:
+    while pioche_tas:
         une_etape_reussite(liste_tas, pioche_tas, affiche=affiche)
     return liste_tas
 
@@ -187,7 +191,7 @@ def reussite_mode_manuel(pioche, nb_tas_max=2):
     liste_tas = []
     pioche_tas = list(pioche)
     # Programme de la fonction
-    while pioche_tas != []:
+    while pioche_tas:
         action = input(
             "\n\n#######################################################\nRetourner une carte (taper 1)\nSaisir un "
             "saut (taper2)\nQuitter (taper Q)\n#######################################################\n\n\n")
@@ -195,7 +199,7 @@ def reussite_mode_manuel(pioche, nb_tas_max=2):
             retourner_carte(liste_tas, pioche_tas)
         elif action == '2':
             for i in range(len(liste_tas)):
-                if i < 10 or i%10==0:
+                if i < 10 or i % 10 == 0:
                     print(" ", end="")
                 print(' {} '.format(i), end='')
             print("")
@@ -232,31 +236,32 @@ def lance_reussite(mode, nb_cartes=32, affiche=False, nb_tas_max=2):
         liste_tas = reussite_mode_manuel(pioche, nb_tas_max)
     return liste_tas
 
-# afficher_reussite([{'valeur':7, 'couleur':'P'},{'valeur':10, 'couleur':'K'},{'valeur':'A', 'couleur':'T'}])
-# print(init_pioche_fichier("data_init.txt"))
-# ecrire_fichier_reussite('teste.txt', [{'valeur': 'V', 'couleur': 'C'}, {'valeur': '8', 'couleur': 'P'},
-#                                      {'valeur': 'V', 'couleur': 'K'}, {'valeur': 'A', 'couleur': 'C'},
-#                                      {'valeur': '10', 'couleur': 'P'}, {'valeur': '8', 'couleur': 'T'},
-#                                      {'valeur': '8', 'couleur': 'K'}, {'valeur': '9', 'couleur': 'T'},
-#                                      {'valeur': 'V', 'couleur': 'P'}, {'valeur': 'A', 'couleur': 'P'},
-#                                      {'valeur': '10', 'couleur': 'K'}, {'valeur': '9', 'couleur': 'P'},
-#                                      {'valeur': '7', 'couleur': 'T'}, {'valeur': 'R', 'couleur': 'T'},
-#                                      {'valeur': '10', 'couleur': 'C'}, {'valeur': '9', 'couleur': 'K'},
-#                                      {'valeur': '9', 'couleur': 'C'}, {'valeur': 'D', 'couleur': 'T'},
-#                                      {'valeur': 'R', 'couleur': 'C'}, {'valeur': '8', 'couleur': 'C'},
-#                                      {'valeur': 'D', 'couleur': 'K'}, {'valeur': '7', 'couleur': 'C'},
-#                                      {'valeur': 'A', 'couleur': 'T'}, {'valeur': '7', 'couleur': 'P'},
-#                                      {'valeur': 'V', 'couleur': 'T'}, {'valeur': '7', 'couleur': 'K'},
-#                                      {'valeur': 'D', 'couleur': 'C'}, {'valeur': 'A', 'couleur': 'K'},
-#                                      {'valeur': 'D', 'couleur': 'P'}, {'valeur': '10', 'couleur': 'T'},
-#                                      {'valeur': 'R', 'couleur': 'K'}, {'valeur': 'R', 'couleur': 'P'}])
-# pioche = init_pioche_alea()
-# print(alliance({'valeur': '7', 'couleur': 'K'}, {'valeur': 'A', 'couleur': 'K'}))
-# liste = [{'valeur': '7', 'couleur': 'K'}, {'valeur': '8', 'couleur': 'P'}, {'valeur': 'A', 'couleur': 'K'}]
-# print(liste)
-# print(saut_si_possible(liste, 1))
-# print(liste)
-# une_etape_reussite(liste, pioche, affiche=True)
-# afficher_reussite(reussite_mode_auto(pioche, affiche=True))
-# reussite_mode_manuel(pioche)
-afficher_reussite(lance_reussite('manuel', nb_cartes=52))
+if __name__ == "__main__":
+    # afficher_reussite([{'valeur':7, 'couleur':'P'},{'valeur':10, 'couleur':'K'},{'valeur':'A', 'couleur':'T'}])
+    # print(init_pioche_fichier("data_init.txt"))
+    # ecrire_fichier_reussite('teste.txt', [{'valeur': 'V', 'couleur': 'C'}, {'valeur': '8', 'couleur': 'P'},
+    #                                      {'valeur': 'V', 'couleur': 'K'}, {'valeur': 'A', 'couleur': 'C'},
+    #                                      {'valeur': '10', 'couleur': 'P'}, {'valeur': '8', 'couleur': 'T'},
+    #                                      {'valeur': '8', 'couleur': 'K'}, {'valeur': '9', 'couleur': 'T'},
+    #                                      {'valeur': 'V', 'couleur': 'P'}, {'valeur': 'A', 'couleur': 'P'},
+    #                                      {'valeur': '10', 'couleur': 'K'}, {'valeur': '9', 'couleur': 'P'},
+    #                                      {'valeur': '7', 'couleur': 'T'}, {'valeur': 'R', 'couleur': 'T'},
+    #                                      {'valeur': '10', 'couleur': 'C'}, {'valeur': '9', 'couleur': 'K'},
+    #                                      {'valeur': '9', 'couleur': 'C'}, {'valeur': 'D', 'couleur': 'T'},
+    #                                      {'valeur': 'R', 'couleur': 'C'}, {'valeur': '8', 'couleur': 'C'},
+    #                                      {'valeur': 'D', 'couleur': 'K'}, {'valeur': '7', 'couleur': 'C'},
+    #                                      {'valeur': 'A', 'couleur': 'T'}, {'valeur': '7', 'couleur': 'P'},
+    #                                      {'valeur': 'V', 'couleur': 'T'}, {'valeur': '7', 'couleur': 'K'},
+    #                                      {'valeur': 'D', 'couleur': 'C'}, {'valeur': 'A', 'couleur': 'K'},
+    #                                      {'valeur': 'D', 'couleur': 'P'}, {'valeur': '10', 'couleur': 'T'},
+    #                                      {'valeur': 'R', 'couleur': 'K'}, {'valeur': 'R', 'couleur': 'P'}])
+    # pioche = init_pioche_alea()
+    # print(alliance({'valeur': '7', 'couleur': 'K'}, {'valeur': 'A', 'couleur': 'K'}))
+    # liste = [{'valeur': '7', 'couleur': 'K'}, {'valeur': '8', 'couleur': 'P'}, {'valeur': 'A', 'couleur': 'K'}]
+    # print(liste)
+    # print(saut_si_possible(liste, 1))
+    # print(liste)
+    # une_etape_reussite(liste, pioche, affiche=True)
+    # afficher_reussite(reussite_mode_auto(pioche, affiche=True))
+    # reussite_mode_manuel(pioche)
+    afficher_reussite(lance_reussite('manuel'))
