@@ -4,11 +4,12 @@ from turtle import *
 # creation de la fenetre
 fenetre = Screen()
 fenetre.title("Reussite des alliances")
-fenetre.bgcolor("yellow")
+fenetre.bgcolor("green")
 height = fenetre.window_height()
 width = fenetre.window_width()
 print(height, width)
 hideturtle()
+speed(1000)
 
 # definition des variable
 tour = True
@@ -33,10 +34,11 @@ def incremente(x, y):
 def more_carte(x, y):
     shape(dos)
     ht()
+    speed(3)
     goto(x, y)
     st()
-    goto(-(height / 2) + 20, (width / 2) -250)
-
+    goto(-(height / 2) + 20, (width / 2) - 250)
+    speed(1000)
 
 
 def connection(x, y):
