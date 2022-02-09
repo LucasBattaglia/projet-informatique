@@ -19,12 +19,11 @@ global count_x
 global count_y
 
 
-
 # gerer les 'Boutton' de la fenetre
 def incremente(x, y):
     if (x + 49) > (height / 2):
         x += 49
-        y=y
+        y = y
     else:
         x = 20
         y -= 71

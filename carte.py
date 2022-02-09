@@ -93,10 +93,7 @@ def alliance(carte1, carte2):
     :param carte2:
     :return:
     """
-    if carte1['valeur'] == carte2['valeur'] or carte1['couleur'] == carte2['couleur']:
-        return True
-    else:
-        return False
+    return carte1['valeur'] == carte2['valeur'] or carte1['couleur'] == carte2['couleur']
 
 
 def saut_si_possible(liste_tas, num_tas):
@@ -108,9 +105,7 @@ def saut_si_possible(liste_tas, num_tas):
     """
     if num_tas < 1 or num_tas == len(liste_tas) - 1:
         return False
-    carte1 = liste_tas[num_tas - 1]
-    carte2 = liste_tas[num_tas + 1]
-    if alliance(carte1, carte2):
+    if alliance(liste_tas[num_tas - 1], liste_tas[num_tas + 1]):
         del liste_tas[num_tas - 1]
         return True
     else:
@@ -235,6 +230,7 @@ def lance_reussite(mode, nb_cartes=32, affiche=False, nb_tas_max=2):
     elif mode == 'manuel':
         liste_tas = reussite_mode_manuel(pioche, nb_tas_max)
     return liste_tas
+
 
 if __name__ == "__main__":
     # afficher_reussite([{'valeur':7, 'couleur':'P'},{'valeur':10, 'couleur':'K'},{'valeur':'A', 'couleur':'T'}])
