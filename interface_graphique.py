@@ -15,6 +15,10 @@ speed(1000)
 tour = True
 dos = "affichage/imgs/carte-dos.gif"
 fenetre.register_shape(dos)
+button_auto = "affichage/imgs/button-automatique2.gif"
+fenetre.register_shape(button_auto)
+button_manuel = "affichage/imgs/button-automatique2.gif"
+fenetre.register_shape(button_manuel)
 global count_x
 global count_y
 
@@ -40,27 +44,31 @@ def more_carte(x, y):
     speed(1000)
 
 
-def connection(x, y):
-    count_x = 20
-    count_y = -250
-    if -(height / 2) - 50 < x < -(height / 2) + 50 and (width / 2) - 80 > y > (width / 2) - 100:
-        print('auto')
-    elif -(height / 2) - 50 < x < -(height / 2) + 50 and (width / 2) - 120 > y > (width / 2) - 140:
-        # Boutton Quitter (Dessin)
-        goto(-150, -210)
-        down()
-        carre()
-        up()
-        write("Quitter", align='center')
+def connectionManuel(x, y):
+    # Boutton Quitter (Dessin)
+    goto(-150, -210)
+    down()
+    carre()
+    up()
+    write("Quitter", align='center')
 
-        # Boutton Pioche (Fenetre)
-        pioche = Turtle()
-        pioche.up()
-        pioche.shape(dos)
-        pioche.st()
-        pioche.goto(150, -200)
-        pioche.onclick(more_carte)
-    elif -(height / 2) + 174 < x < -(height / 2) + 274 and -(width / 2) + 174 < y < -(width / 2) + 194:
+    # Boutton Pioche (Fenetre)
+    pioche = Turtle()
+    pioche.up()
+    print(type(pioche))
+    pioche.shape(dos)
+    pioche.st()
+    pioche.goto(150, -200)
+    pioche.onclick(more_carte)
+
+
+def connectionAuto(x, y):
+    print(auto)
+
+
+def connection(x, y):
+    print(x, y)
+    if -(height / 2) + 174 < x < -(height / 2) + 274 and -(width / 2) + 174 < y < -(width / 2) + 194:
         print("Quitter")
 
 
@@ -76,20 +84,23 @@ def carre():
 
 if __name__ == "__main__":
     # affichage des boutton
-    up()
-    goto(-(height / 2) - 50, (width / 2) - 100)
-    down()
-    carre()
-    write("Mode Automatique", align='center')
-    up()
-    goto(-(height / 2) - 50, (width / 2) - 140)
-    down()
-    carre()
-    write("Mode Manuel", align='center')
-    up()
 
-    # gerer les interaction
-    onscreenclick(connection)
-    print("OK")
+    auto = Turtle()
+    auto.up()
+    auto.ht()
+    print(type(fenetre), type(auto))
+    auto.shape(button_auto)
+    auto.goto(-(height / 2), (width / 2) - 80)
+    auto.st()
+    auto.onclick(connectionAuto)
+
+    manuel = Turtle()
+    manuel.up()
+    manuel.ht()
+    print(type(fenetre), type(manuel))
+    manuel.shape(button_auto)
+    manuel.goto(-(height / 2), (width / 2) - 130)
+    manuel.st()
+    manuel.onclick(connectionManuel)
 
     fenetre.mainloop()
