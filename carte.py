@@ -85,8 +85,12 @@ def ecrire_fichier_reussite(nom_fich, pioche):
 def init_pioche_alea(nb_carte=32):
     """
 
-    :param nb_carte:
-    :return:
+    Entrée: argument optionnel, entier (valeur par défaut = 32 / autre valeur = 52)
+
+    Fonction: créer une liste de cartes en fonction du nombre de cartes demandé (32 ou 52)
+              mélange les cartes
+
+    Sortie: liste de toutes les cartes mélangés
     """
     liste_carte = []
     liste_couleur = ['C', 'K', 'P', 'T']
@@ -105,9 +109,11 @@ def init_pioche_alea(nb_carte=32):
 def alliance(carte1, carte2):
     """
 
-    :param carte1:
-    :param carte2:
-    :return:
+    Entrée: deux dictionnaires chacun représentant une carte
+
+    Fonction: teste si deux cartes ont soit la meme valeur, soit la meme couleur
+
+    Sortie: booléen
     """
     return carte1['valeur'] == carte2['valeur'] or carte1['couleur'] == carte2['couleur']
 
@@ -131,8 +137,11 @@ def saut_si_possible(liste_tas, num_tas):
 def verification_possible_saut(liste_tas):
     """
 
-    :param liste_tas:
-    :return:
+    Entrée: liste
+
+    Fonction: 
+
+    Sortie: 
     """
     for carte in range(len(liste_tas) - 1):
         possible = saut_si_possible(liste_tas, carte + 1)
