@@ -8,8 +8,13 @@ from time import *
 def carte_to_chaine(dic_carte):
     """
 
-    :param dic_carte:
-    :return:
+    Entrée: dictionnaire représentation de carte, valeur et couleur
+
+    Fonction: transformation en chaine de caractère de dictionnaire
+              modification apportée pour valeurs différentes de 10, rajout d'un espace devant
+
+    Sortie: chaine de 3 caractères représentant la carte donnée en argument
+
     """
     if dic_carte['couleur'] == 'P':
         couleur = chr(9824)
@@ -28,8 +33,12 @@ def carte_to_chaine(dic_carte):
 def afficher_reussite(liste_carte):
     """
 
-    :param liste_carte:
-    :return:
+    Entrée: liste de dictionnaires, correspondant à plusieurs cartes
+
+    Fonction: afficher la suite de carte contenu dans la liste en chaine de caractère 
+              séparation par des espaces 
+
+    Sortie: chaine de caractères représentant la suite des cartes donnée en argument
     """
     for carte in liste_carte:
         print(carte_to_chaine(carte), end=" ")
@@ -39,8 +48,12 @@ def afficher_reussite(liste_carte):
 def init_pioche_fichier(fichier_carte):
     """
 
-    :param fichier_carte:
-    :return:
+    Entrée: fichier texte qui contient une suite de cartes (data_init.txt)
+
+    Fonction: extrait les données du fichier texte
+              transformation en liste des données, les cartes sous forme de plusieurs chaines de caractère
+
+    Sortie: chaine de caractères : (valeur)-(couleur)
     """
     liste = []
     f = open(fichier_carte, "r")
@@ -53,15 +66,18 @@ def init_pioche_fichier(fichier_carte):
     return liste
 
 
-def ecrire_fichier_reussite(nom_fich, liste_carte):
+def ecrire_fichier_reussite(nom_fich, pioche):
     """
 
-    :param nom_fich:
-    :param liste_carte:
-    :return:
+    Entrée: fichier (nom_fich) et liste de cartes (pioche)
+
+    Fonction: modification du fichier
+              écrire la liste des cartes dans le fichier 
+
+    Sortie: ne renvoie rien
     """
     f = open(nom_fich, 'w')
-    for carte in liste_carte:
+    for carte in pioche:
         f.write("{}-{} ".format(carte['valeur'], carte['couleur']))
     f.close()
 
