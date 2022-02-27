@@ -24,19 +24,20 @@ def quitter():
 def auto():
     print("Ok")
 
+
 def new_carte():
     print("new carte")
 
+
 def manuel():
-    dos = tk.PhotoImage(file='C:/Users/lucas/OneDrive/Bureau/git/projet-informatique/affichage/imgs/carte-dos.gif')
-    pioche = tk.Button(fenetre, image=dos, bg=FOND, command= new_carte)
+    dos = tk.PhotoImage(file='affichage/imgs/carte-dos.png')
+    pioche = tk.Button(fenetre, image=dos, bg=FOND, command=new_carte)
     pioche.grid(row=4, column=1, padx=5, pady=5)
 
 
 #####################################################################################
 #############################   Programme principale    #############################
 #####################################################################################
-
 
 titre = tk.Label(fenetre, text="Réussite des alliances", font=("Ink Free", 20), bg=FOND, fg="Black")
 titre.grid(row=0, column=1, padx=5, pady=5)

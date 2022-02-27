@@ -7,13 +7,16 @@ from time import *
 
 def carte_to_chaine(dic_carte):
     """
+    Transformation en chaine de caractère de dictionnaire modification apportée pour valeurs différentes de 10,
+    rajout d'un espace devant
 
-    Entrée: dictionnaire représentation de carte, valeur et couleur
+    :parameter
+    dic_carte:dic
+        Dictionnaire représentation de carte, valeur et couleur
 
-    Fonction: transformation en chaine de caractère de dictionnaire
-              modification apportée pour valeurs différentes de 10, rajout d'un espace devant
-
-    Sortie: chaine de 3 caractères représentant la carte donnée en argument
+    :returns
+    str
+        Chaine de 3 caractères représentant la carte donnée en argument
 
     """
     if dic_carte['couleur'] == 'P':
@@ -32,13 +35,18 @@ def carte_to_chaine(dic_carte):
 
 def afficher_reussite(liste_carte):
     """
+    Afficher la suite de carte contenu dans la liste en chaine de caractère séparation par des espaces
 
-    Entrée: liste de dictionnaires, correspondant à plusieurs cartes
+    :parameter
+    liste_carte:list
+        Liste de dictionnaires, correspondant à plusieurs cartes
 
-    Fonction: afficher la suite de carte contenu dans la liste en chaine de caractère 
-              séparation par des espaces 
+    :returns
+    None
 
-    Sortie: chaine de caractères représentant la suite des cartes donnée en argument
+    Effet de bord
+    str
+        représentant la suite des cartes donnée en argument
     """
     for carte in liste_carte:
         print(carte_to_chaine(carte), end=" ")
@@ -47,13 +55,16 @@ def afficher_reussite(liste_carte):
 
 def init_pioche_fichier(fichier_carte):
     """
+    Extrait les données du fichier texte transformation des cartes sous forme de plusieurs
+    chaines de caractère en liste des dictionnaire
 
-    Entrée: fichier texte qui contient une suite de cartes (data_init.txt)
+    :parameter
+    fichier_carte:TextIOWrapper
+        Fichier texte qui contient une suite de cartes (data_init.txt)
 
-    Fonction: extrait les données du fichier texte
-              transformation en liste des données, les cartes sous forme de plusieurs chaines de caractère
-
-    Sortie: chaine de caractères : (valeur)-(couleur)
+    :returns
+    liste
+        un liste de carte qui sont sous formes de dictionnaires
     """
     liste = []
     f = open(fichier_carte, "r")
@@ -68,13 +79,20 @@ def init_pioche_fichier(fichier_carte):
 
 def ecrire_fichier_reussite(nom_fich, pioche):
     """
+    Ecrit la liste des cartes dans le fichier
 
-    Entrée: fichier (nom_fich) et liste de cartes (pioche)
+    :parameter
+    nom_fich:str
+        nom du fichier d'enregistrement de la pioche
+    pioche:list
+        liste de cartes
 
-    Fonction: modification du fichier
-              écrire la liste des cartes dans le fichier 
+    :returns
+    None
 
-    Sortie: ne renvoie rien
+    Effet de bord
+    TextIOWrapper
+        creation et ecriture (d'une pioche) dans un fichier
     """
     f = open(nom_fich, 'w')
     for carte in pioche:
@@ -276,4 +294,4 @@ if __name__ == "__main__":
     # une_etape_reussite(liste, pioche, affiche=True)
     # afficher_reussite(reussite_mode_auto(pioche, affiche=True))
     # reussite_mode_manuel(pioche)
-    afficher_reussite(lance_reussite('manuel'))
+    afficher_reussite(lance_reussite('manuel', nb_tas_max=5))
