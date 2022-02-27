@@ -126,12 +126,17 @@ def init_pioche_alea(nb_carte=32):
 
 def alliance(carte1, carte2):
     """
+    Teste si deux cartes ont soit la meme valeur, soit la meme couleur
 
-    Entrée: deux dictionnaires chacun représentant une carte
+    :parameter
+    carte1:dic
+        premiere carte
+    carte2:dic
+        seconde carte
 
-    Fonction: teste si deux cartes ont soit la meme valeur, soit la meme couleur
-
-    Sortie: booléen
+    :returns
+    booléen
+        returne True si les carte on la meme valeur ou la meme couleur, False sinon
     """
     return carte1['valeur'] == carte2['valeur'] or carte1['couleur'] == carte2['couleur']
 
