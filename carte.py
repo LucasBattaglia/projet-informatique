@@ -10,7 +10,11 @@ def carte_to_chaine(dic_carte):
     Transformation en chaine de caractère de dictionnaire modification apportée pour valeurs différentes de 10,
     rajout d'un espace devant
 
+<<<<<<< HEAD
     :param dic_carte:dict
+=======
+    :param dic_carte:dic
+>>>>>>> fd775f1200dce35cee271062db233993b29c717a
         Dictionnaire représentation de carte, valeur et couleur
 
     :return
@@ -52,8 +56,8 @@ def afficher_reussite(liste_carte):
 
 def init_pioche_fichier(fichier_carte):
     """
-    Extrait les données du fichier texte transformation des cartes sous forme de plusieurs
-    chaines de caractère en liste des dictionnaire
+    Extrait les données du fichier texte transformation des cartes sous forme de plusieurs chaines de caractère en liste
+    des dictionnaire
 
     :param fichier_carte:TextIOWrapper
         Fichier texte qui contient une suite de cartes (data_init.txt)
@@ -82,8 +86,12 @@ def ecrire_fichier_reussite(nom_fich, pioche):
     :param pioche:list
         liste de cartes
 
+<<<<<<< HEAD
     :return
     None
+=======
+    :return None
+>>>>>>> fd775f1200dce35cee271062db233993b29c717a
 
     :effet de bord
     TextIOWrapper
@@ -97,6 +105,7 @@ def ecrire_fichier_reussite(nom_fich, pioche):
 
 def init_pioche_alea(nb_carte=32):
     """
+<<<<<<< HEAD
     Créer une liste de cartes en fonction du nombre de cartes demandé (32 ou 52) et mélange les cartes de façon aléatoire
               
     :param nb_carte:int
@@ -104,6 +113,14 @@ def init_pioche_alea(nb_carte=32):
 
     :return
     list
+=======
+    Créer une liste de cartes en fonction du nombre de cartes demandé (32 ou 52) mélange les cartes
+
+    :param nb_carte:int
+        represente le nombre de carte (optionnel)
+
+    :return list
+>>>>>>> fd775f1200dce35cee271062db233993b29c717a
         liste de toutes les cartes mélangés
     """
     liste_carte = []
@@ -124,6 +141,7 @@ def alliance(carte1, carte2):
     """
     Teste si deux cartes ont soit la meme valeur, soit la meme couleur
 
+<<<<<<< HEAD
     :param carte1:dic
         premiere carte
     :param carte2:dic
@@ -132,6 +150,16 @@ def alliance(carte1, carte2):
     :return
     bool
         returne True si les cartes ont la meme valeur ou la meme couleur, False sinon
+=======
+    :param carte1:dict
+        premiere carte
+    :param carte2:dict
+        seconde carte
+
+    :return:
+    bool
+        returne True si les carte on la meme valeur ou la meme couleur, False sinon
+>>>>>>> fd775f1200dce35cee271062db233993b29c717a
     """
     return carte1['valeur'] == carte2['valeur'] or carte1['couleur'] == carte2['couleur']
 
@@ -165,7 +193,15 @@ def verification_possible_saut(liste_tas):
     :param liste_tas:list
         liste de cartes visibles sur les tas de la réussite
 
+<<<<<<< HEAD
     :return
+=======
+
+    :param liste_tas:list
+        Representation de la premiere carte de chaque tas present sur la table
+
+    :return:
+>>>>>>> fd775f1200dce35cee271062db233993b29c717a
     """
     for carte in range(len(liste_tas) - 1):
         possible = saut_si_possible(liste_tas, carte + 1)
