@@ -10,14 +10,12 @@ def carte_to_chaine(dic_carte):
     Transformation en chaine de caractère de dictionnaire modification apportée pour valeurs différentes de 10,
     rajout d'un espace devant
 
-    :parameter
-    dic_carte:dic
+    :param dic_carte:dict
         Dictionnaire représentation de carte, valeur et couleur
 
-    :returns
+    :return
     str
         Chaine de 3 caractères représentant la carte donnée en argument
-
     """
     if dic_carte['couleur'] == 'P':
         couleur = chr(9824)
@@ -37,14 +35,13 @@ def afficher_reussite(liste_carte):
     """
     Afficher la suite de carte contenu dans la liste en chaine de caractère séparation par des espaces
 
-    :parameter
-    liste_carte:list
+    :param liste_carte:list
         Liste de dictionnaires, correspondant à plusieurs cartes
 
-    :returns
+    :return
     None
 
-    Effet de bord
+    :effet de bord
     str
         représentant la suite des cartes donnée en argument
     """
@@ -58,12 +55,11 @@ def init_pioche_fichier(fichier_carte):
     Extrait les données du fichier texte transformation des cartes sous forme de plusieurs
     chaines de caractère en liste des dictionnaire
 
-    :parameter
-    fichier_carte:TextIOWrapper
+    :param fichier_carte:TextIOWrapper
         Fichier texte qui contient une suite de cartes (data_init.txt)
 
-    :returns
-    liste
+    :return
+    list
         un liste de carte qui sont sous formes de dictionnaires
     """
     liste = []
@@ -81,16 +77,15 @@ def ecrire_fichier_reussite(nom_fich, pioche):
     """
     Ecrit la liste des cartes dans le fichier
 
-    :parameter
-    nom_fich:str
+    :param nom_fich:str
         nom du fichier d'enregistrement de la pioche
-    pioche:list
+    :param pioche:list
         liste de cartes
 
-    :returns
+    :return
     None
 
-    Effet de bord
+    :effet de bord
     TextIOWrapper
         creation et ecriture (d'une pioche) dans un fichier
     """
@@ -102,13 +97,14 @@ def ecrire_fichier_reussite(nom_fich, pioche):
 
 def init_pioche_alea(nb_carte=32):
     """
+    Créer une liste de cartes en fonction du nombre de cartes demandé (32 ou 52) et mélange les cartes de façon aléatoire
+              
+    :param nb_carte:int
+        argument optionnel (valeur par défaut = 32 / autre valeur = 52)
 
-    Entrée: argument optionnel, entier (valeur par défaut = 32 / autre valeur = 52)
-
-    Fonction: créer une liste de cartes en fonction du nombre de cartes demandé (32 ou 52)
-              mélange les cartes
-
-    Sortie: liste de toutes les cartes mélangés
+    :return
+    list
+        liste de toutes les cartes mélangés
     """
     liste_carte = []
     liste_couleur = ['C', 'K', 'P', 'T']
@@ -128,29 +124,32 @@ def alliance(carte1, carte2):
     """
     Teste si deux cartes ont soit la meme valeur, soit la meme couleur
 
-    :parameter
-    carte1:dic
+    :param carte1:dic
         premiere carte
-    carte2:dic
+    :param carte2:dic
         seconde carte
 
-    :returns
-    booléen
-        returne True si les carte on la meme valeur ou la meme couleur, False sinon
+    :return
+    bool
+        returne True si les cartes ont la meme valeur ou la meme couleur, False sinon
     """
     return carte1['valeur'] == carte2['valeur'] or carte1['couleur'] == carte2['couleur']
 
 
 def saut_si_possible(liste_tas, num_tas):
     """
-
-    Entrée: liste de cartes visibles sur les tas de la réussite, entier (num_tas)
-
-    Fonction: teste si saut possible
-              si oui : modification de la liste donnée en argument
-              teste si modification 
+    Teste si saut possible,
+        si oui : modification de la liste donnée en argument
+    Teste si une modification a été effectué
+    
+    :param liste_tas:list
+        liste de cartes visibles sur les tas de la réussite
+    :param num_tas:int
+        numéro d'une carte du tas qui se trouve entre deux cartes de meme couleur ou de meme valeur
               
-    Sortie: retour de booléen mais pas d'affichage
+    :return
+    bool
+        retour de booléen mais pas d'affichage
     """
     if num_tas < 1 or num_tas == len(liste_tas) - 1:
         return False
@@ -163,12 +162,10 @@ def saut_si_possible(liste_tas, num_tas):
 
 def verification_possible_saut(liste_tas):
     """
+    :param liste_tas:list
+        liste de cartes visibles sur les tas de la réussite
 
-    Entrée: liste de cartes visibles sur les tas de la réussite
-
-    Fonction: 
-
-    Sortie: 
+    :return
     """
     for carte in range(len(liste_tas) - 1):
         possible = saut_si_possible(liste_tas, carte + 1)
@@ -178,10 +175,10 @@ def verification_possible_saut(liste_tas):
 
 def retourner_carte(liste_tas, pioche):
     """
-
-    :param liste_tas:
-    :param pioche:
-    :return:
+    :param liste_tas:list
+    :param pioche:list
+    
+    :return
     """
     carte = pioche[0]
     del pioche[0]
@@ -190,11 +187,11 @@ def retourner_carte(liste_tas, pioche):
 
 def une_etape_reussite(liste_tas, pioche, affiche=False):
     """
-
-    :param liste_tas:
-    :param pioche:
-    :param affiche:
-    :return:
+    :param liste_tas:list
+    :param pioche:list
+    :param affiche:bool
+    
+    :return
     """
     # a revoir
     liste_tas.append(pioche[0])
@@ -212,10 +209,10 @@ def une_etape_reussite(liste_tas, pioche, affiche=False):
 
 def reussite_mode_auto(pioche, affiche=False):
     """
-
     :param pioche:
     :param affiche:
-    :return:
+    
+    :return
     """
     if affiche:
         afficher_reussite(pioche)
@@ -229,9 +226,9 @@ def reussite_mode_auto(pioche, affiche=False):
 
 def reussite_mode_manuel(pioche, nb_tas_max=2):
     """
-
-    :param pioche:
-    :param nb_tas_max:
+    :param pioche:list
+    :param nb_tas_max:int
+    
     :return:
     """
     # definition des donnee
@@ -269,11 +266,11 @@ def reussite_mode_manuel(pioche, nb_tas_max=2):
 
 def lance_reussite(mode, nb_cartes=32, affiche=False, nb_tas_max=2):
     """
-
     :param mode:
-    :param nb_cartes:
-    :param affiche:
-    :param nb_tas_max:
+    :param nb_cartes:int
+    :param affiche:bool
+    :param nb_tas_max:int
+    
     :return:
     """
     pioche = init_pioche_alea(nb_cartes)
