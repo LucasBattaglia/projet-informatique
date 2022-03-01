@@ -10,11 +10,7 @@ def carte_to_chaine(dic_carte):
     Transformation en chaine de caractère de dictionnaire modification apportée pour valeurs différentes de 10,
     rajout d'un espace devant
 
-<<<<<<< HEAD
     :param dic_carte:dict
-=======
-    :param dic_carte:dic
->>>>>>> fd775f1200dce35cee271062db233993b29c717a
         Dictionnaire représentation de carte, valeur et couleur
 
     :return
@@ -86,13 +82,9 @@ def ecrire_fichier_reussite(nom_fich, pioche):
     :param pioche:list
         liste de cartes
 
-<<<<<<< HEAD
-    :return
-    None
-=======
-    :return None
->>>>>>> fd775f1200dce35cee271062db233993b29c717a
-
+    :return 
+     None
+        
     :effet de bord
     TextIOWrapper
         creation et ecriture (d'une pioche) dans un fichier
@@ -105,22 +97,13 @@ def ecrire_fichier_reussite(nom_fich, pioche):
 
 def init_pioche_alea(nb_carte=32):
     """
-<<<<<<< HEAD
     Créer une liste de cartes en fonction du nombre de cartes demandé (32 ou 52) et mélange les cartes de façon aléatoire
               
     :param nb_carte:int
-        argument optionnel (valeur par défaut = 32 / autre valeur = 52)
+        represente le nombre de carte (optionnel, valeur par défaut = 32 / autre valeur = 52)
 
     :return
     list
-=======
-    Créer une liste de cartes en fonction du nombre de cartes demandé (32 ou 52) mélange les cartes
-
-    :param nb_carte:int
-        represente le nombre de carte (optionnel)
-
-    :return list
->>>>>>> fd775f1200dce35cee271062db233993b29c717a
         liste de toutes les cartes mélangés
     """
     liste_carte = []
@@ -141,7 +124,6 @@ def alliance(carte1, carte2):
     """
     Teste si deux cartes ont soit la meme valeur, soit la meme couleur
 
-<<<<<<< HEAD
     :param carte1:dic
         premiere carte
     :param carte2:dic
@@ -150,16 +132,6 @@ def alliance(carte1, carte2):
     :return
     bool
         returne True si les cartes ont la meme valeur ou la meme couleur, False sinon
-=======
-    :param carte1:dict
-        premiere carte
-    :param carte2:dict
-        seconde carte
-
-    :return:
-    bool
-        returne True si les carte on la meme valeur ou la meme couleur, False sinon
->>>>>>> fd775f1200dce35cee271062db233993b29c717a
     """
     return carte1['valeur'] == carte2['valeur'] or carte1['couleur'] == carte2['couleur']
 
@@ -190,18 +162,14 @@ def saut_si_possible(liste_tas, num_tas):
 
 def verification_possible_saut(liste_tas):
     """
+    Parcourir le tas et vérifier si le saut d'une carte est possible
+    
     :param liste_tas:list
-        liste de cartes visibles sur les tas de la réussite
+        représentation de la premiere carte de chaque tas présent sur la table
 
-<<<<<<< HEAD
     :return
-=======
-
-    :param liste_tas:list
-        Representation de la premiere carte de chaque tas present sur la table
-
-    :return:
->>>>>>> fd775f1200dce35cee271062db233993b29c717a
+    bool
+        retour booléen, Vrai si le saut est possible, Faux si le saut n'est pas possible
     """
     for carte in range(len(liste_tas) - 1):
         possible = saut_si_possible(liste_tas, carte + 1)
@@ -211,7 +179,9 @@ def verification_possible_saut(liste_tas):
 
 def retourner_carte(liste_tas, pioche):
     """
+    
     :param liste_tas:list
+        
     :param pioche:list
     
     :return
@@ -224,10 +194,14 @@ def retourner_carte(liste_tas, pioche):
 def une_etape_reussite(liste_tas, pioche, affiche=False):
     """
     :param liste_tas:list
+        liste des cartes visibles des tas de la réussite
     :param pioche:list
+        liste des cartes restant dans la pioche
     :param affiche:bool
+        représentaion de la réussite du jeu (argument optionnel)
     
     :return
+    
     """
     # a revoir
     liste_tas.append(pioche[0])
@@ -245,10 +219,14 @@ def une_etape_reussite(liste_tas, pioche, affiche=False):
 
 def reussite_mode_auto(pioche, affiche=False):
     """
-    :param pioche:
-    :param affiche:
+    :param pioche:list
+        représentation de l'ensemble du jeu de cartes mélangé
+    :param affiche:bool
+        
     
     :return
+    list
+        liste des cartes visibles sur le tas restant à la fin de la réussite
     """
     if affiche:
         afficher_reussite(pioche)
@@ -263,11 +241,16 @@ def reussite_mode_auto(pioche, affiche=False):
 def reussite_mode_manuel(pioche, nb_tas_max=2):
     """
     :param pioche:list
+        représentation de l'ensemble du jeu de cartes mélangé
     :param nb_tas_max:int
-    
-    :return:
+        nombre maximum de tas qu'il peut rester à la fin  pour définir la partie comme gagnante
+        (argument optionnel)
+        
+    :return
+    list
+        liste des cartes visibles sur les tas restant à la fin de la réussite
     """
-    # definition des donnee
+    # definition des donnees
     liste_tas = []
     pioche_tas = list(pioche)
     # Programme de la fonction
@@ -302,12 +285,21 @@ def reussite_mode_manuel(pioche, nb_tas_max=2):
 
 def lance_reussite(mode, nb_cartes=32, affiche=False, nb_tas_max=2):
     """
-    :param mode:
-    :param nb_cartes:int
-    :param affiche:bool
-    :param nb_tas_max:int
     
-    :return:
+    
+    :param mode:str
+        chaine de caractères (deux valeurs : 'manuel' ou 'auto')
+    :param nb_cartes:int
+        nombre de cartes (argument optionnel)
+    :param affiche:bool
+        (argument optionnel)
+    :param nb_tas_max:int
+        nombre maximum de tas qu'il peut rester à la fin  pour définir la partie comme gagnante
+        (argument optionnel)
+    
+    :return
+    list
+        liste des tas restant en fin de partie
     """
     pioche = init_pioche_alea(nb_cartes)
     if mode == 'auto':
