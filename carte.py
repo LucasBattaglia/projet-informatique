@@ -10,11 +10,8 @@ def carte_to_chaine(dic_carte):
     Transformation en chaine de caractère de dictionnaire modification apportée pour valeurs différentes de 10,
     rajout d'un espace devant
 
-<<<<<<< HEAD
-    :param dic_carte:dict
-=======
-    :param dic_carte:dic
 
+    :param dic_carte:dict
         Dictionnaire représentation de carte, valeur et couleur
 
     :return
@@ -86,12 +83,8 @@ def ecrire_fichier_reussite(nom_fich, pioche):
     :param pioche:list
         liste de cartes
 
-<<<<<<< HEAD
     :return
     None
-=======
-    :return None
-
 
     :effet de bord
     TextIOWrapper
@@ -105,7 +98,6 @@ def ecrire_fichier_reussite(nom_fich, pioche):
 
 def init_pioche_alea(nb_carte=32):
     """
-<<<<<<< HEAD
     Créer une liste de cartes en fonction du nombre de cartes demandé (32 ou 52) et mélange les cartes de façon aléatoire
               
     :param nb_carte:int
@@ -113,13 +105,6 @@ def init_pioche_alea(nb_carte=32):
 
     :return
     list
-=======
-    Créer une liste de cartes en fonction du nombre de cartes demandé (32 ou 52) mélange les cartes
-
-    :param nb_carte:int
-        represente le nombre de carte (optionnel)
-
-    :return list
         liste de toutes les cartes mélangés
     """
     liste_carte = []
@@ -140,16 +125,6 @@ def alliance(carte1, carte2):
     """
     Teste si deux cartes ont soit la meme valeur, soit la meme couleur
 
-
-    :param carte1:dic
-        premiere carte
-    :param carte2:dic
-        seconde carte
-
-    :return
-    bool
-        returne True si les cartes ont la meme valeur ou la meme couleur, False sinon
-=======
     :param carte1:dict
         premiere carte
     :param carte2:dict
@@ -190,11 +165,6 @@ def verification_possible_saut(liste_tas):
     """
     :param liste_tas:list
         liste de cartes visibles sur les tas de la réussite
-
-<<<<<<< HEAD
-    :return
-=======
-
     :param liste_tas:list
         Representation de la premiere carte de chaque tas present sur la table
 
