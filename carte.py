@@ -121,9 +121,13 @@ def alliance(carte1, carte2):
 def saut_si_possible(liste_tas, num_tas):
     """
 
-    :param liste_tas:
-    :param num_tas:
-    :return:
+    Entrée: liste de cartes visibles sur les tas de la réussite, entier (num_tas)
+
+    Fonction: teste si saut possible
+              si oui : modification de la liste donnée en argument
+              teste si modification 
+              
+    Sortie: retour de booléen mais pas d'affichage
     """
     if num_tas < 1 or num_tas == len(liste_tas) - 1:
         return False
@@ -137,7 +141,7 @@ def saut_si_possible(liste_tas, num_tas):
 def verification_possible_saut(liste_tas):
     """
 
-    Entrée: liste
+    Entrée: liste de cartes visibles sur les tas de la réussite
 
     Fonction: 
 
