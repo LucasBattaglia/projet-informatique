@@ -14,7 +14,7 @@ def carte_to_chaine(dic_carte):
     :param dic_carte:dict
 =======
     :param dic_carte:dic
->>>>>>> fd775f1200dce35cee271062db233993b29c717a
+
         Dictionnaire représentation de carte, valeur et couleur
 
     :return
@@ -91,7 +91,7 @@ def ecrire_fichier_reussite(nom_fich, pioche):
     None
 =======
     :return None
->>>>>>> fd775f1200dce35cee271062db233993b29c717a
+
 
     :effet de bord
     TextIOWrapper
@@ -120,7 +120,6 @@ def init_pioche_alea(nb_carte=32):
         represente le nombre de carte (optionnel)
 
     :return list
->>>>>>> fd775f1200dce35cee271062db233993b29c717a
         liste de toutes les cartes mélangés
     """
     liste_carte = []
@@ -141,7 +140,7 @@ def alliance(carte1, carte2):
     """
     Teste si deux cartes ont soit la meme valeur, soit la meme couleur
 
-<<<<<<< HEAD
+
     :param carte1:dic
         premiere carte
     :param carte2:dic
@@ -159,7 +158,6 @@ def alliance(carte1, carte2):
     :return:
     bool
         returne True si les carte on la meme valeur ou la meme couleur, False sinon
->>>>>>> fd775f1200dce35cee271062db233993b29c717a
     """
     return carte1['valeur'] == carte2['valeur'] or carte1['couleur'] == carte2['couleur']
 
@@ -201,7 +199,6 @@ def verification_possible_saut(liste_tas):
         Representation de la premiere carte de chaque tas present sur la table
 
     :return:
->>>>>>> fd775f1200dce35cee271062db233993b29c717a
     """
     for carte in range(len(liste_tas) - 1):
         possible = saut_si_possible(liste_tas, carte + 1)
@@ -319,7 +316,7 @@ def lance_reussite(mode, nb_cartes=32, affiche=False, nb_tas_max=2):
 
 if __name__ == "__main__":
     # afficher_reussite([{'valeur':7, 'couleur':'P'},{'valeur':10, 'couleur':'K'},{'valeur':'A', 'couleur':'T'}])
-    # print(init_pioche_fichier("data_init.txt"))
+    print(init_pioche_fichier("data_init.txt"))
     # ecrire_fichier_reussite('teste.txt', [{'valeur': 'V', 'couleur': 'C'}, {'valeur': '8', 'couleur': 'P'},
     #                                      {'valeur': 'V', 'couleur': 'K'}, {'valeur': 'A', 'couleur': 'C'},
     #                                      {'valeur': '10', 'couleur': 'P'}, {'valeur': '8', 'couleur': 'T'},
