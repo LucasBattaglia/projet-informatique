@@ -11,6 +11,8 @@ hauteur_carte = 64
 fenetre = tk.Tk()
 fenetre.configure(background=FOND)
 fenetre.title('Othelo')
+dos = tk.PhotoImage(file='affichage/imgs/carte-dos.png')
+
 
 
 #####################################################################################
@@ -30,7 +32,6 @@ def new_carte():
 
 
 def manuel():
-    dos = tk.PhotoImage(file='affichage/imgs/carte-dos.png')
     pioche = tk.Button(fenetre, image=dos, bg=FOND, command=new_carte)
     pioche.grid(row=4, column=1, padx=5, pady=5)
 
