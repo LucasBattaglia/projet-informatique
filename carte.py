@@ -98,7 +98,8 @@ def ecrire_fichier_reussite(nom_fich, pioche):
 
 def init_pioche_alea(nb_carte=32):
     """
-    Créer une liste de cartes en fonction du nombre de cartes demandé (32 ou 52) et mélange les cartes de façon aléatoire
+    Créer une liste de cartes en fonction du nombre de cartes demandé (32 ou 52) et mélange les cartes de façon
+    aléatoire
               
     :param nb_carte:int
         argument optionnel (valeur par défaut = 32 / autre valeur = 52)
