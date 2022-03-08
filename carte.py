@@ -168,7 +168,9 @@ def verification_possible_saut(liste_tas):
     :param liste_tas:list
         Representation de la premiere carte de chaque tas present sur la table
 
-    :return:
+    :return
+    bool
+        retour booléen true si possibilité de sauter une carte, False si non
     """
     for carte in range(len(liste_tas) - 1):
         possible = saut_si_possible(liste_tas, carte + 1)
@@ -178,10 +180,14 @@ def verification_possible_saut(liste_tas):
 
 def retourner_carte(liste_tas, pioche):
     """
+
+    Suppression de la premiere carte de la liste de la pioche et ajout de cette meme carte dans la liste des tas 
+
     :param liste_tas:list
     :param pioche:list
     
     :return
+    None
     """
     carte = pioche[0]
     del pioche[0]
@@ -190,18 +196,24 @@ def retourner_carte(liste_tas, pioche):
 
 def une_etape_reussite(liste_tas, pioche, affiche=False):
     """
-    :param liste_tas:list
+
+    Selection de la premiere carte de la pioche, placement de cette carte dans la liste du tas de cartes et suppression de cette carte de la pioche
+    Effectuer la vérification possible d'un saut
+    Tant que le saut est fait, 
+    Affichage de la réussite à chaque des étapes (sauts et pioche) 
+    
     :param pioche:list
     :param affiche:bool
     
     :return
+    None
     """
     # a revoir
     liste_tas.append(pioche[0])
     del pioche[0]
     if affiche:
         afficher_reussite(liste_tas)
-        sleep(5)
+        sleep(5) # temps en plus pour lecture moins rapide
     saut = saut_si_possible(liste_tas, len(liste_tas) - 2)
     while saut:
         if affiche:
@@ -212,10 +224,12 @@ def une_etape_reussite(liste_tas, pioche, affiche=False):
 
 def reussite_mode_auto(pioche, affiche=False):
     """
-    :param pioche:
-    :param affiche:
+    :param pioche:list
+    :param affiche:bool
     
     :return
+    list
+
     """
     if affiche:
         afficher_reussite(pioche)
@@ -232,9 +246,10 @@ def reussite_mode_manuel(pioche, nb_tas_max=2):
     :param pioche:list
     :param nb_tas_max:int
     
-    :return:
+    :return
+    list
     """
-    # definition des donnee
+    # initialisation de variables
     liste_tas = []
     pioche_tas = list(pioche)
     # Programme de la fonction
@@ -269,12 +284,18 @@ def reussite_mode_manuel(pioche, nb_tas_max=2):
 
 def lance_reussite(mode, nb_cartes=32, affiche=False, nb_tas_max=2):
     """
-    :param mode:
+    :param mode:str
+        chaine de caractères qui représente le mode joué ('manuel' ou 'auto')
+
     :param nb_cartes:int
+        
+
     :param affiche:bool
+
     :param nb_tas_max:int
     
-    :return:
+    :return
+    list
     """
     pioche = init_pioche_alea(nb_cartes)
     if mode == 'auto':
