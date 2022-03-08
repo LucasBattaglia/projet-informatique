@@ -34,7 +34,6 @@ def new_carte(Bpioche):
     image = dic_photo[pioche[0]['couleur'], pioche[0]['valeur']]
     comp_carte += 1
     print(comp_carte)
-    list_bouton = []
     dictionnaire = {}
     if comp_carte <= nb_carte / 4:
         print(pioche[0]['couleur'], pioche[0]['valeur'])
@@ -141,6 +140,7 @@ if __name__ == "__main__":
     liste_Canevas2 = []
     liste_Canevas3 = []
     liste_Canevas4 = []
+    list_bouton = []
 
     titre = tk.Label(fenetre, text="Réussite des alliances", font=("Ink Free", 20), bg=FOND, fg="Black")
     titre.grid(row=0, column=1, padx=5, pady=5)
