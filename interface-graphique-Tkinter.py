@@ -2,7 +2,7 @@ import tkinter as tk
 import carte
 import interface_aide_Tkinter as iat
 import webbrowser
-
+import random
 
 #####################################################################################
 #############################   Creation des fonction    ############################
@@ -11,30 +11,50 @@ import webbrowser
 
 def auto():
     print("Ok")
+    print("liste_bouton : {} --> {}\n\nsauv_pioche : {} --> {}\n\n can1 : {} --> {} / {}\n\ncan2 : {} --> {} / {}\n\ncan3 : {} --> {} / {}\n\n can4: {} --> {}".format(list_bouton, len(list_bouton), sauv_pioche, len(sauv_pioche), liste_Canevas1, len(liste_Canevas1), comp_Can1, liste_Canevas2, len(liste_Canevas2), comp_Can2, liste_Canevas3, len(liste_Canevas3), comp_Can3, liste_Canevas4, len(liste_Canevas4)))
+
+
+def modif_list_bouton(dictionnaire):
+    # On mets a jour le bouton dans la liste general des canvas
+    for i in range(len(list_bouton)):
+        if list_bouton[i]['couleur'] == dictionnaire['couleur'] and list_bouton[i]['valeur'] == dictionnaire['valeur']:
+            print(list_bouton[i])
+            list_bouton[i]['bouton'] = bouton
+            print(list_bouton[i])
 
 
 def ChangeCan():
     global comp_Can1, comp_Can2, comp_Can3, bouton
     print("changecan")
+    print("can1 : {}\ncan2 : {}\ncan3 : {}\nnb_carte/4 : {}".format(comp_Can1, comp_Can2, comp_Can3, nb_carte / 4))
 
     # Initialisation du dictionnaire correspondant a 1 bouton (couleur, valeur, canvas, widget)
     dictionnaire = {}
 
+    print(len(liste_Canevas1))
+    print(len(liste_Canevas2))
+
     # On verifie que les canvas on bien le bon nombre de bouton (le nombre de carte total diviser par 4)
     # et on repart si c'est pas le cas
-    if comp_Can1 <= nb_carte / 4 and len(liste_Canevas2) > 0:
+    if comp_Can1 < nb_carte / 4 and len(liste_Canevas2) > 0:
+        print("canvas2-->1")
         image = dic_photo[liste_Canevas2[0]['couleur'], liste_Canevas2[0]['valeur']]  # On recupere l'image a afficher
         dictionnaire['couleur'], dictionnaire['valeur'], dictionnaire["Can"] = liste_Canevas2[0]['couleur'], liste_Canevas2[0]['valeur'], "Can1"  # On mets les premiere valeur dans le dictionnaire (qui correspond a 1 bouton)
         bouton = tk.Button(Canevas1, image=image, bg=FOND, command=lambda: Saut(dictionnaire['couleur'], dictionnaire['valeur']))  # On cree le bouton
-        dictionnaire['bouton'] = bouton # On ajoute le bouton au dictionnaire
+        dictionnaire['bouton'] = bouton  # On ajoute le bouton au dictionnaire
         dictionnaire['bouton'].pack(side=tk.LEFT)  # On affiche le bouton dans le bon canvas
         liste_Canevas2[0]['bouton'].pack_forget()  # On efface le bouton de l'ancien canvas
+        print(dictionnaire)
         liste_Canevas1.append(dictionnaire)  # On ajoute le bouton dans la liste du bon canvas
         del liste_Canevas2[0]  # On efface le bouton de la liste de l'ancien canvas
         comp_Can1 += 1  # On ajoute une carte au nouveau canvas
         comp_Can2 -= 1  # On en supprime une dans l'ancien canvas
+        modif_list_bouton(dictionnaire)
 
-    if comp_Can2 <= nb_carte / 4 and len(liste_Canevas3) > 0:
+    print(len(liste_Canevas3))
+
+    if comp_Can2 < nb_carte / 4 and len(liste_Canevas3) > 0:
+        print("canvas3-->2")
         image = dic_photo[liste_Canevas3[0]['couleur'], liste_Canevas3[0]['valeur']]  # On recupere l'image a afficher
         dictionnaire['couleur'], dictionnaire['valeur'], dictionnaire["Can"] = liste_Canevas3[0]['couleur'], liste_Canevas3[0]['valeur'], "Can2"  # On mets les premiere valeur dans le dictionnaire (qui correspond a 1 bouton)
         bouton = tk.Button(Canevas2, image=image, bg=FOND, command=lambda: Saut(dictionnaire['couleur'], dictionnaire['valeur']))  # On cree le bouton
@@ -45,8 +65,12 @@ def ChangeCan():
         del liste_Canevas3[0]  # On efface le bouton de la liste de l'ancien canvas
         comp_Can2 += 1  # On ajoute une carte au nouveau canvas
         comp_Can3 -= 1  # On en supprime une dans l'ancien canvas
+        modif_list_bouton(dictionnaire)
 
-    if comp_Can3 <= nb_carte / 4 and len(liste_Canevas4) > 0:
+    print(len(liste_Canevas4))
+
+    if comp_Can3 < nb_carte / 4 and len(liste_Canevas4) > 0:
+        print("canvas4-->3")
         image = dic_photo[liste_Canevas4[0]['couleur'], liste_Canevas4[0]['valeur']]  # On recupere l'image a afficher
         dictionnaire['couleur'], dictionnaire['valeur'], dictionnaire["Can"] = liste_Canevas4[0]['couleur'], liste_Canevas4[0]['valeur'], "Can3"  # On mets les premiere valeur dans le dictionnaire (qui correspond a 1 bouton)
         bouton = tk.Button(Canevas3, image=image, bg=FOND, command=lambda: Saut(dictionnaire['couleur'], dictionnaire['valeur']))  # On cree le bouton
@@ -56,11 +80,15 @@ def ChangeCan():
         liste_Canevas3.append(dictionnaire)  # On ajoute le bouton dans la liste du bon canvas
         del liste_Canevas4[0]  # On efface le bouton de la liste de l'ancien canvas
         comp_Can3 += 1  # On ajoute une carte au nouveau canvas
+        modif_list_bouton(dictionnaire)
 
-    # On mets a jour le bouton dans la liste general des canvas
-    for i in range(len(list_bouton)):
-        if list_bouton[i]['couleur'] == dictionnaire['couleur'] and list_bouton[i]['valeur'] == dictionnaire['valeur']:
-            list_bouton[i]['bouton'] = bouton
+    #else:
+     #   image = dic_photo[liste_Canevas4[0]['couleur'], liste_Canevas4[0]['valeur']]  # On recupere l'image a afficher
+      #  dictionnaire['couleur'], dictionnaire['valeur'], dictionnaire["Can"] = liste_Canevas4[0]['couleur'], liste_Canevas4[0]['valeur'], "Can3"  # On mets les premiere valeur dans le dictionnaire (qui correspond a 1 bouton)
+       # bouton = tk.Button(Canevas4, image=image, bg=FOND, command=lambda: Saut(dictionnaire['couleur'], dictionnaire['valeur']))  # On cree le bouton
+        #dictionnaire['bouton'] = bouton  # On ajoute le bouton au dictionnaire
+
+
 
 
 def supr_list_can(canvas, couleur, valeur):
@@ -95,7 +123,7 @@ def Saut(couleur, valeur):
     for i in range(len(list_bouton)):
         if list_bouton[i]['couleur'] == couleur and list_bouton[i]['valeur'] == valeur:
             tas = i - 1  # On enleve 1 car on veut suprimer la carte precedent la carte appuyer
-    print(len(list_bouton))
+    print(len(list_bouton), tas)
 
     # preparation suppresion des listes
     print("supre {}-{}".format(list_bouton[tas]['couleur'], list_bouton[tas]['valeur']))
@@ -144,11 +172,11 @@ def new_carte(Bpioche):
     # Initialisation du dictionnaire correspondant a 1 bouton (couleur, valeur, canvas, widget)
     dictionnaire = {}
 
-    print("can1 : {}\ncan2 : {}\ncan3 : {}".format(comp_Can1, comp_Can2, comp_Can3))
+    print("can1 : {}\ncan2 : {}\ncan3 : {}\nnb_carte/4 : {}".format(comp_Can1, comp_Can2, comp_Can3, nb_carte / 4))
 
     #repartition des carte dans les canvas et affichage
     # (Quand toute les cartes sont afficher elle sont repartie equitablement dans 4 canvas)
-    if comp_Can1 <= nb_carte / 4:
+    if comp_Can1 < nb_carte / 4:
         comp_Can1 += 1  # On ajoute une carte au canvas 1
         print(pioche[0]['couleur'], pioche[0]['valeur'])
         dictionnaire['couleur'], dictionnaire['valeur'], dictionnaire['can'] = pioche[0]['couleur'], pioche[0]['valeur'], "Can1"  # On mets les premiere valeur dans le dictionnaire (qui correspond a 1 bouton)
@@ -158,7 +186,7 @@ def new_carte(Bpioche):
         list_bouton.append(dictionnaire)  # On ajoute le dictionnaire a la liste des bouton general
         liste_Canevas1.append(dictionnaire)  # On ajoute le dictionnaire a la liste des bouton du canvas ou il est afficher
 
-    elif comp_Can2 <= nb_carte / 4:
+    elif comp_Can2 < nb_carte / 4:
         comp_Can2 += 1  # On ajoute une carte au canvas 2
         print(pioche[0]['couleur'], pioche[0]['valeur'])
         dictionnaire['couleur'], dictionnaire['valeur'], dictionnaire["can"] = pioche[0]['couleur'], pioche[0]['valeur'], "Can2"  # On mets les premiere valeur dans le dictionnaire (qui correspond a 1 bouton)
@@ -168,7 +196,7 @@ def new_carte(Bpioche):
         list_bouton.append(dictionnaire)  # On ajoute le dictionnaire a la liste des bouton general
         liste_Canevas2.append(dictionnaire)  # On ajoute le dictionnaire a la liste des bouton du canvas ou il est afficher
 
-    elif comp_Can3 <= nb_carte / 4:
+    elif comp_Can3 < nb_carte / 4:
         comp_Can3 += 1  # On ajoute une carte au canvas 3
         print(pioche[0]['couleur'], pioche[0]['valeur'])
         dictionnaire['couleur'], dictionnaire['valeur'], dictionnaire['can'] = pioche[0]['couleur'], pioche[0]['valeur'], "Can3"  # On mets les premiere valeur dans le dictionnaire (qui correspond a 1 bouton)
@@ -193,7 +221,7 @@ def new_carte(Bpioche):
     # Si on n'a plus de carte dans la pioche on supprime le bouton correspondant a la pioche
     if not pioche:
         Bpioche.grid_forget()  # cacher le bouton de la pioche
-        print("---- Plus de care dans la pioche ----")
+        print("---- Plus de care dans la pioche ---- {}".format(len(list_bouton)))
 
 
 def manuel():
@@ -206,8 +234,9 @@ def manuel():
     :effet de bord
         appelle de la fonction new_carte
     """
-    Bpioche = tk.Button(fenetre, image=dos, bg=FOND, activebackground='blue', relief=tk.GROOVE, activeforeground='yellow', command=lambda: new_carte(Bpioche))  # Creation du bouton pour la pioche
-    Bpioche.grid(row=5, column=1, padx=5, pady=5)  # affichage du bouton de la pioche
+    if pioche:
+        Bpioche = tk.Button(fenetre, image=dos, bg=FOND, activebackground='blue', relief=tk.GROOVE, activeforeground='yellow', command=lambda: new_carte(Bpioche))  # Creation du bouton pour la pioche
+        Bpioche.grid(row=5, column=1, padx=5, pady=5)  # affichage du bouton de la pioche
 
 #####################################################################################
 #############################   Programme principale    #############################
@@ -219,10 +248,14 @@ if __name__ == "__main__":
     ############################   Creation de la fenetre    ############################
 
     FOND = "green"  # couleur de fond de la fenetre (constante)
+    largeur_carte = 44  # largeur (en pixel) d'une image de carte
+    hauteur_carte = 64  # hauteur (en pixel) d'une image de carte
+    nb_carte = 32  # corespond au nombre de carte dans le packet de jeu
 
     fenetre = tk.Tk()  # Creation de la fenetre
     fenetre.configure(background=FOND)  # Mise en couleur du fond de la fenetre
     fenetre.title('Jeu de la reussite')  # titre de la fenetre
+    fenetre.resizable(width=False, height=False)  # empeche le plein ecran
 
     ######################  Generation des image pour les cartes  ######################
 
@@ -236,8 +269,12 @@ if __name__ == "__main__":
             photo = "affichage/imgs/carte-" + v + '-' + c + '.gif'  # On les mets dans l'adresse permetant de la trouver
             dic_photo[c, v] = tk.PhotoImage(file=photo)  # Generation des image et stockage dans le dictionnaire
 
+    v = random.choice(valeurs)
+    c = random.choice(couleurs)
+    fenetre.iconphoto(True, tk.PhotoImage(file="affichage/imgs/carte-{}-{}.gif".format(v,c)))
+
     ###############  Generation d'une pioche aleatoire  ###############
-    pioche = carte.init_pioche_alea()  # appelle de la fonction init_pioche_alea du fichier carte
+    pioche = carte.init_pioche_alea(nb_carte=nb_carte)  # appelle de la fonction init_pioche_alea du fichier carte
     sauv_pioche = list(pioche)  # Creation d'une deuxieme liste pour sauvegarder le pioche
     carte.afficher_reussite(pioche)  # affichage de la pioche
     carte.afficher_reussite(sauv_pioche)  # affichage de la sauvegarde
@@ -245,12 +282,9 @@ if __name__ == "__main__":
     ###############  Varialble  ###############
 
     # Entier
-    comp_Can1 = 1  # Compte le nombre de carte dans le canvas 1
-    comp_Can2 = 1  # Compte le nombre de carte dans le canvas 2
-    comp_Can3 = 1  # Compte le nombre de carte dans le canvas 3
-    nb_carte = 32  # corespond au nombre de carte dans le packet de jeu
-    largeur_carte = 44  # largeur (en pixel) d'une image de carte
-    hauteur_carte = 64  # hauteur (en pixel) d'une image de carte
+    comp_Can1 = 0  # Compte le nombre de carte dans le canvas 1
+    comp_Can2 = 0  # Compte le nombre de carte dans le canvas 2
+    comp_Can3 = 0  # Compte le nombre de carte dans le canvas 3
 
     # liste
     liste_Canevas1 = []  # liste de carte contenu dans le Canevas1
@@ -273,7 +307,7 @@ if __name__ == "__main__":
     mode_menu.add_command(label="Automatique", command=auto)  # Ajout d'une seconde commande dans le sous-menu precedent
 
     help_menu = tk.Menu(menu_bar, tearoff=0)  # Creation d'un second sous-menu dans la barre de menu
-    help_menu.add_command(label="regle", command=lambda: webbrowser.open("https://www.uca.fr/"))  # Ajout d'une commande dans le sous-menu precedent
+    help_menu.add_command(label="regle", command=lambda: webbrowser.open("https://projetinfomi3-bin08.wixsite.com/reussite_alliances-1/post/la-r%C3%A9ussite-des-alliances"))  # Ajout d'une commande dans le sous-menu precedent
     help_menu.add_command(label="aide", command=iat.aide)  # Ajout d'une seconde commande dans le sous-menu precedent
 
     menu_bar.add_cascade(label="Mode de jeu", menu=mode_menu)  # Ajout d'un sous menu en cascade dans la barre de menu
