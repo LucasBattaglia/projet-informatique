@@ -1,6 +1,7 @@
 import tkinter as tk
 import carte
 import interface_aide_Tkinter as iat
+import statistique as stat
 import webbrowser
 import random
 
@@ -11,7 +12,7 @@ import random
 
 def auto():
     print("Ok")
-    print("liste_bouton : {} --> {}\n\nsauv_pioche : {} --> {}\n\n can1 : {} --> {} / {}\n\ncan2 : {} --> {} / {}\n\ncan3 : {} --> {} / {}\n\n can4: {} --> {}".format(list_bouton, len(list_bouton), sauv_pioche, len(sauv_pioche), liste_Canevas1, len(liste_Canevas1), comp_Can1, liste_Canevas2, len(liste_Canevas2), comp_Can2, liste_Canevas3, len(liste_Canevas3), comp_Can3, liste_Canevas4, len(liste_Canevas4)))
+    print("liste_bouton : {} --> {}\n\nsauv_pioche : {} --> {}\n\n can1 : {} --> {} / {}\n\ncan2 : {} --> {} / {}\n\ncan3 : {} --> {} / {}\n\n can4: {} --> {} / {}".format(list_bouton, len(list_bouton), sauv_pioche, len(sauv_pioche), liste_Canevas1, len(liste_Canevas1), comp_Can1, liste_Canevas2, len(liste_Canevas2), comp_Can2, liste_Canevas3, len(liste_Canevas3), comp_Can3, liste_Canevas4, len(liste_Canevas4), comp_Can4))
 
 
 def modif_list_bouton(dictionnaire):
@@ -24,7 +25,7 @@ def modif_list_bouton(dictionnaire):
 
 
 def ChangeCan():
-    global comp_Can1, comp_Can2, comp_Can3, bouton
+    global comp_Can1, comp_Can2, comp_Can3, comp_Can4, bouton
     print("changecan")
     print("can1 : {}\ncan2 : {}\ncan3 : {}\nnb_carte/4 : {}".format(comp_Can1, comp_Can2, comp_Can3, nb_carte / 4))
 
@@ -80,6 +81,7 @@ def ChangeCan():
         liste_Canevas3.append(dictionnaire)  # On ajoute le bouton dans la liste du bon canvas
         del liste_Canevas4[0]  # On efface le bouton de la liste de l'ancien canvas
         comp_Can3 += 1  # On ajoute une carte au nouveau canvas
+        comp_Can4 -= 1  # On en supprime une dans l'ancien canvas
         modif_list_bouton(dictionnaire)
 
     #else:
@@ -92,7 +94,7 @@ def ChangeCan():
 
 
 def supr_list_can(canvas, couleur, valeur):
-    global liste_Canevas1, liste_Canevas2, liste_Canevas3
+    global liste_Canevas1, liste_Canevas2, liste_Canevas3, liste_Canevas4
 
     # On enleve la carte supprimer de la liste du canvas associer
     # 1) Selection du canvas associer
@@ -114,9 +116,14 @@ def supr_list_can(canvas, couleur, valeur):
             if liste_Canevas3[i]['couleur'] == couleur and liste_Canevas3[i]['valeur'] == valeur:
                 del liste_Canevas3[i]
 
+    elif canvas == "Can4":
+        for i in range(len(liste_Canevas4) - 1):
+            if liste_Canevas4[i]['couleur'] == couleur and liste_Canevas4[i]['valeur'] == valeur:
+                del liste_Canevas4[i]
+
 
 def Saut(couleur, valeur):
-    global tas, comp_Can3, comp_Can1, comp_Can2
+    global tas, comp_Can3, comp_Can1, comp_Can2, comp_Can4
     print("saut {}-{}".format(valeur, couleur))
 
     # recherche du bouton a supprimmer
@@ -131,15 +138,19 @@ def Saut(couleur, valeur):
 
     if list_bouton[tas]['can'] == "Can1":
         comp_Can1 -= 1  # On decremente le canevas contenant la carte
-        print(comp_Can1)
+        print("can 1 : {}".format(comp_Can1))
 
     elif list_bouton[tas]['can'] == "Can2":
         comp_Can2 -= 1  # On decremente le canevas contenant la carte
-        print(comp_Can2)
+        print("can 2 : {}".format(comp_Can2))
 
     elif list_bouton[tas]['can'] == "Can3":
         comp_Can3 -= 1  # On decremente le canevas contenant la carte
-        print(comp_Can3)
+        print("can 3 : {}".format(comp_Can3))
+
+    elif list_bouton[tas]['can'] == "Can4":
+        comp_Can4 -= 1
+        print("can 4 : {}".format(comp_Can4))
 
     # on supprime le bouton
     # 1) De la liste du canvas
@@ -164,7 +175,7 @@ def new_carte(Bpioche):
     :effet de bord
         appelle de la fonction Saut
     """
-    global comp_Can1, comp_Can2, comp_Can3, liste_Canevas1, liste_Canevas2, liste_Canevas3, liste_Canevas4, list_bouton
+    global comp_Can1, comp_Can2, comp_Can3, comp_Can4, liste_Canevas1, liste_Canevas2, liste_Canevas3, liste_Canevas4, list_bouton
 
     # On recupere l'image que l'on va afficher sur le bouton
     image = dic_photo[pioche[0]['couleur'], pioche[0]['valeur']]
@@ -207,6 +218,7 @@ def new_carte(Bpioche):
         liste_Canevas3.append(dictionnaire)  # On ajoute le dictionnaire a la liste des bouton du canvas ou il est afficher
 
     else:
+        comp_Can4 += 1
         print(pioche[0]['couleur'], pioche[0]['valeur'])
         dictionnaire['couleur'], dictionnaire['valeur'], dictionnaire['can'] = pioche[0]['couleur'], pioche[0]['valeur'], "Can4"  # On mets les premiere valeur dans le dictionnaire (qui correspond a 1 bouton)
         button = tk.Button(Canevas4, image=image, bg=FOND, command=lambda: Saut(dictionnaire['couleur'], dictionnaire['valeur']))  # creation du bouton (ATTENTION appel au dictionnaire precedent)
@@ -285,6 +297,7 @@ if __name__ == "__main__":
     comp_Can1 = 0  # Compte le nombre de carte dans le canvas 1
     comp_Can2 = 0  # Compte le nombre de carte dans le canvas 2
     comp_Can3 = 0  # Compte le nombre de carte dans le canvas 3
+    comp_Can4 = 0  # Compte le nombre de carte dans le canvas 4
 
     # liste
     liste_Canevas1 = []  # liste de carte contenu dans le Canevas1
@@ -312,6 +325,7 @@ if __name__ == "__main__":
 
     menu_bar.add_cascade(label="Mode de jeu", menu=mode_menu)  # Ajout d'un sous menu en cascade dans la barre de menu
     menu_bar.add_cascade(label="help", menu=help_menu)  # Ajout d'un sous menu en cascade dans la barre de menu
+    menu_bar.add_command(label="Statistique", command= stat.conf_stat)
     menu_bar.add_command(label="Quitter", command=fenetre.destroy)  # Ajout d'une commande dans la barre de menu
 
     fenetre.config(menu=menu_bar)  # affichage de la barre de menu a l'ecran
