@@ -102,21 +102,25 @@ def supr_list_can(canvas, couleur, valeur):
     # 3) verification que se soit bien notre carte
     # 4) Suppression de la carte (si c'est la bonne
     if canvas == "Can1":
+        print("can1")
         for i in range(len(liste_Canevas1) - 1):
             if liste_Canevas1[i]['couleur'] == couleur and liste_Canevas1[i]['valeur'] == valeur:
                 del liste_Canevas1[i]
 
     elif canvas == "Can2":
+        print("can2")
         for i in range(len(liste_Canevas2) - 1):
             if liste_Canevas2[i]['couleur'] == couleur and liste_Canevas2[i]['valeur'] == valeur:
                 del liste_Canevas2[i]
 
     elif canvas == "Can3":
+        print("can3")
         for i in range(len(liste_Canevas3) - 1):
             if liste_Canevas3[i]['couleur'] == couleur and liste_Canevas3[i]['valeur'] == valeur:
                 del liste_Canevas3[i]
 
     elif canvas == "Can4":
+        print("can4")
         for i in range(len(liste_Canevas4) - 1):
             if liste_Canevas4[i]['couleur'] == couleur and liste_Canevas4[i]['valeur'] == valeur:
                 del liste_Canevas4[i]
@@ -132,32 +136,35 @@ def Saut(couleur, valeur):
             tas = i - 1  # On enleve 1 car on veut suprimer la carte precedent la carte appuyer
     print(len(list_bouton), tas)
 
-    # preparation suppresion des listes
-    print("supre {}-{}".format(list_bouton[tas]['couleur'], list_bouton[tas]['valeur']))
-    list_bouton[tas]['bouton'].pack_forget()  # On cache le canevas
+    # verification du saut
+    if tas>=0 and tas<(len(list_bouton)-2):
+        if carte.alliance(list_bouton[tas], list_bouton[tas+2]):
+            # preparation suppresion des listes
+            print("supre {}-{}".format(list_bouton[tas]['couleur'], list_bouton[tas]['valeur']))
+            list_bouton[tas]['bouton'].pack_forget()  # On cache le canevas
 
-    if list_bouton[tas]['can'] == "Can1":
-        comp_Can1 -= 1  # On decremente le canevas contenant la carte
-        print("can 1 : {}".format(comp_Can1))
+            if list_bouton[tas]['can'] == "Can1":
+                comp_Can1 -= 1  # On decremente le canevas contenant la carte
+                print("can 1 : {}".format(comp_Can1))
 
-    elif list_bouton[tas]['can'] == "Can2":
-        comp_Can2 -= 1  # On decremente le canevas contenant la carte
-        print("can 2 : {}".format(comp_Can2))
+            elif list_bouton[tas]['can'] == "Can2":
+                comp_Can2 -= 1  # On decremente le canevas contenant la carte
+                print("can 2 : {}".format(comp_Can2))
 
-    elif list_bouton[tas]['can'] == "Can3":
-        comp_Can3 -= 1  # On decremente le canevas contenant la carte
-        print("can 3 : {}".format(comp_Can3))
+            elif list_bouton[tas]['can'] == "Can3":
+                comp_Can3 -= 1  # On decremente le canevas contenant la carte
+                print("can 3 : {}".format(comp_Can3))
 
-    elif list_bouton[tas]['can'] == "Can4":
-        comp_Can4 -= 1
-        print("can 4 : {}".format(comp_Can4))
+            elif list_bouton[tas]['can'] == "Can4":
+                comp_Can4 -= 1
+                print("can 4 : {}".format(comp_Can4))
 
-    # on supprime le bouton
-    # 1) De la liste du canvas
-    supr_list_can(list_bouton[tas]['can'], list_bouton[tas]['couleur'], list_bouton[tas]['valeur'])
-    # 2) de la liste general des bouton
-    del list_bouton[tas]
-    print(len(list_bouton))
+            # on supprime le bouton
+            # 1) De la liste du canvas
+            supr_list_can(list_bouton[tas]['can'], list_bouton[tas]['couleur'], list_bouton[tas]['valeur'])
+            # 2) de la liste general des bouton
+            del list_bouton[tas]
+            print(len(list_bouton))
 
     #  on verifie que l'on est pas besoin de passer une carte du canvas 2 a 1, etc
     ChangeCan()
@@ -325,7 +332,7 @@ if __name__ == "__main__":
 
     menu_bar.add_cascade(label="Mode de jeu", menu=mode_menu)  # Ajout d'un sous menu en cascade dans la barre de menu
     menu_bar.add_cascade(label="help", menu=help_menu)  # Ajout d'un sous menu en cascade dans la barre de menu
-    menu_bar.add_command(label="Statistique", command= stat.conf_stat)
+    menu_bar.add_command(label="Statistiques", command= stat.conf_stat)
     menu_bar.add_command(label="Quitter", command=fenetre.destroy)  # Ajout d'une commande dans la barre de menu
 
     fenetre.config(menu=menu_bar)  # affichage de la barre de menu a l'ecran

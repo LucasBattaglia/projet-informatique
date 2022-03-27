@@ -3,6 +3,74 @@
 # importation des bibliotheque de Python
 import random
 from time import *
+import tkinter as tk
+import interface_aide_Tkinter as iat
+import statistique as stat
+import webbrowser
+from tkinter import ttk
+
+
+# Variable Global
+FOND = "green"  # couleur de fond de la fenetre (constante)
+largeur_carte = 44  # largeur (en pixel) d'une image de carte
+hauteur_carte = 64  # hauteur (en pixel) d'une image de carte
+nb_carte = 32  # corespond au nombre de carte dans le packet de jeu
+
+fenetre = tk.Tk()  # Creation de la fenetre
+fenetre.configure(background=FOND)  # Mise en couleur du fond de la fenetre
+fenetre.title('Jeu de la reussite')  # titre de la fenetre
+fenetre.resizable(width=False, height=False)  # empeche le plein ecran
+
+dos = tk.PhotoImage(file='affichage/imgs/carte-dos.png')  # Generation de l'image du dos d'une carte
+
+valeurs = ['2', '3', '4', '5', '6', '7', '8', '9', '10', 'V', 'D', 'R', 'A']  # Liste de valeur de carte
+couleurs = ['P', 'C', 'K', 'T']  # Liste des couleur de carte
+dic_photo = {}  # Dictionnaire contenant toute les carte du jeu
+for c in couleurs:  # Pour chaque couleur ...
+    for v in valeurs:  # ... on associe une valeur
+        photo = "affichage/imgs/carte-" + v + '-' + c + '.gif'  # On les mets dans l'adresse permetant de la trouver
+        dic_photo[c, v] = tk.PhotoImage(file=photo)  # Generation des image et stockage dans le dictionnaire
+
+v = random.choice(valeurs)
+c = random.choice(couleurs)
+fenetre.iconphoto(True, tk.PhotoImage(file="affichage/imgs/carte-{}-{}.gif".format(v,c)))
+
+# Entier
+comp_Can1 = 0  # Compte le nombre de carte dans le canvas 1
+comp_Can2 = 0  # Compte le nombre de carte dans le canvas 2
+comp_Can3 = 0  # Compte le nombre de carte dans le canvas 3
+comp_Can4 = 0  # Compte le nombre de carte dans le canvas 4
+
+# liste
+liste_Canevas1 = []  # liste de carte contenu dans le Canevas1
+liste_Canevas2 = []  # liste de carte contenu dans le Canevas2
+liste_Canevas3 = []  # liste de carte contenu dans le Canevas3
+liste_Canevas4 = []  # liste de carte contenu dans le Canevas4
+list_bouton = []  # liste de dictionnaire nessaissaire a bouton ({'valeur'=…, 'couleur'=…, 'bouton'=…})
+
+# Mode
+mode="MANUEL"
+
+###############  mise en page de la fenetre  ###############
+
+# Widget de Texte (tkinter.Label) affichant le titre en haut de la fenetre
+titre = tk.Label(fenetre, text="Réussite des alliances", font=("Ink Free", 20), bg=FOND, fg="Black")  # Generation du widget
+titre.grid(row=0, column=1, padx=5, pady=5)  # Affichage du widget
+
+# Zone de jeu (normalement zone de dessin: tkinter.Canvas) permettant de repartir les cartes dans la fenetre
+Canevas1 = tk.Canvas(fenetre, bg=FOND, height=hauteur_carte, highlightthickness=0)  # Creation d'un Canvas
+Canevas1.grid(row=1, column=1, padx=5, pady=5)  # affichage du canvas
+
+Canevas2 = tk.Canvas(fenetre, bg=FOND, height=hauteur_carte, highlightthickness=0)  # Creation d'un Canvas
+Canevas2.grid(row=2, column=1, padx=5, pady=5)  # affichage du canvas
+
+Canevas3 = tk.Canvas(fenetre, bg=FOND, height=hauteur_carte, highlightthickness=0)  # Creation d'un Canvas
+Canevas3.grid(row=3, column=1, padx=5, pady=5)  # affichage du canvas
+
+Canevas4 = tk.Canvas(fenetre, bg=FOND, height=hauteur_carte, highlightthickness=0)  # Creation d'un Canvas
+Canevas4.grid(row=4, column=1, padx=5, pady=5)  # affichage du canvas
+
+################  Definition des fonction  #################
 
 
 def carte_to_chaine(dic_carte):
@@ -18,7 +86,7 @@ def carte_to_chaine(dic_carte):
     str
         Chaine de 3 caractères représentant la carte donnée en argument
     """
-    if dic_carte['couleur'] == 'P':
+    """if dic_carte['couleur'] == 'P':
         couleur = chr(9824)
     elif dic_carte['couleur'] == 'C':
         couleur = chr(9825)
@@ -29,26 +97,50 @@ def carte_to_chaine(dic_carte):
     if str(dic_carte['valeur']) == '10':
         return "{}{}".format(dic_carte['valeur'], couleur)
     else:
-        return " {}{}".format(dic_carte['valeur'], couleur)
+        return " {}{}".format(dic_carte['valeur'], couleur)"""
+    global comp_Can1, comp_Can2, comp_Can4, comp_Can3
+    c = dic_carte['couleur']
+    v = dic_carte['valeur']
+    image = dic_photo[c, v]
+    if comp_Can1<nb_carte/4:
+        Button = ttk.Label(Canevas1, image=image, background=FOND)
+        Button.pack(side=tk.LEFT)
+        comp_Can1+=1
+    elif comp_Can2<nb_carte/4:
+        Button = ttk.Label(Canevas2, image=image, background=FOND)
+        Button.pack(side=tk.LEFT)
+        comp_Can2+=1
+    elif comp_Can3<nb_carte/4:
+        Button = ttk.Label(Canevas3, image=image, background=FOND)
+        Button.pack(side=tk.LEFT)
+        comp_Can3+=1
+    elif comp_Can4<nb_carte/4:
+        Button = ttk.Label(Canevas4, image=image, background=FOND)
+        Button.pack(side=tk.LEFT)
+        comp_Can4+=1
 
 
 def afficher_reussite(liste_carte):
     """
-    Afficher la suite de carte contenu dans la liste en chaine de caractère séparation par des espaces
-
-    :param liste_carte:list
-        Liste de dictionnaires, correspondant à plusieurs cartes
-
-    :return
-    None
-
-    :effet de bord
-    str
-        représentant la suite des cartes donnée en argument
+    # Supprime toute les cartes puis les rafiche toute avec la modification
     """
+    global comp_Can1, comp_Can2, comp_Can4, comp_Can3
+    for c in Canevas1.winfo_children():
+        c.destroy()
+        comp_Can1 = 0
+    for c in Canevas2.winfo_children():
+        c.destroy()
+        comp_Can2 = 0
+    for c in Canevas3.winfo_children():
+        c.destroy()
+        comp_Can3 = 0
+    for c in Canevas4.winfo_children():
+        c.destroy()
+        comp_Can4 = 0
     for carte in liste_carte:
-        print(carte_to_chaine(carte), end=" ")
-    print("\n")
+        carte_to_chaine(carte)
+    #sleep(0.1)
+
 
 
 def init_pioche_fichier(fichier_carte):
@@ -100,7 +192,7 @@ def init_pioche_alea(nb_carte=32):
     """
     Créer une liste de cartes en fonction du nombre de cartes demandé (32 ou 52) et mélange les cartes de façon
     aléatoire
-              
+
     :param nb_carte:int
         argument optionnel (valeur par défaut = 32 / autre valeur = 52)
 
@@ -143,12 +235,12 @@ def saut_si_possible(liste_tas, num_tas):
     Teste si saut possible,
         si oui : modification de la liste donnée en argument
     Teste si une modification a été effectué
-    
+
     :param liste_tas:list
         liste de cartes visibles sur les tas de la réussite
     :param num_tas:int
         numéro d'une carte du tas qui se trouve entre deux cartes de meme couleur ou de meme valeur
-              
+
     :return
     bool
         retour de booléen mais pas d'affichage
@@ -182,11 +274,11 @@ def verification_possible_saut(liste_tas):
 def retourner_carte(liste_tas, pioche):
     """
 
-    Suppression de la premiere carte de la liste de la pioche et ajout de cette meme carte dans la liste des tas 
+    Suppression de la premiere carte de la liste de la pioche et ajout de cette meme carte dans la liste des tas
 
     :param liste_tas:list
     :param pioche:list
-    
+
     :return
     None
     """
@@ -200,12 +292,12 @@ def une_etape_reussite(liste_tas, pioche, affiche=False):
 
     Selection de la premiere carte de la pioche, placement de cette carte dans la liste du tas de cartes et suppression de cette carte de la pioche
     Effectuer la vérification possible d'un saut
-    Tant que le saut est fait, 
-    Affichage de la réussite à chaque des étapes (sauts et pioche) 
-    
+    Tant que le saut est fait,
+    Affichage de la réussite à chaque des étapes (sauts et pioche)
+
     :param pioche:list
     :param affiche:bool
-    
+
     :return
     None
     """
@@ -214,12 +306,10 @@ def une_etape_reussite(liste_tas, pioche, affiche=False):
     del pioche[0]
     if affiche:
         afficher_reussite(liste_tas)
-        sleep(2) # temps en plus pour lecture moins rapide
     saut = saut_si_possible(liste_tas, len(liste_tas) - 2)
     while saut:
         if affiche:
             afficher_reussite(liste_tas)
-            sleep(2)
         saut = verification_possible_saut(liste_tas)
 
 
@@ -227,14 +317,13 @@ def reussite_mode_auto(pioche, affiche=False):
     """
     :param pioche:list
     :param affiche:bool
-    
+
     :return
     list
 
     """
     if affiche:
         afficher_reussite(pioche)
-        sleep(2)
     pioche_tas = list(pioche)
     liste_tas = []
     while pioche_tas:
@@ -246,7 +335,7 @@ def reussite_mode_manuel(pioche, nb_tas_max=2):
     """
     :param pioche:list
     :param nb_tas_max:int
-    
+
     :return
     list
     """
@@ -268,9 +357,12 @@ def reussite_mode_manuel(pioche, nb_tas_max=2):
             print("")
             afficher_reussite(liste_tas)
             num = int(input("Quel tas voulez-vous faire sauter (entrer un numero, on commence par 0): "))
-            possible = saut_si_possible(liste_tas, num)
-            if not possible:
-                print('Impossible de faire sauter le tas numero {}'.format(num))
+            if num>0 and num<len(liste_tas)-2:
+                possible = saut_si_possible(liste_tas, num)
+                if not possible:
+                    print('Impossible de faire sauter le tas numero {}'.format(num))
+                else:
+                    print('Impossible de faire ce saut')
         elif action == 'Q':
             for carte in pioche_tas:
                 liste_tas.append(carte)
@@ -289,12 +381,12 @@ def lance_reussite(mode, nb_cartes=32, affiche=False, nb_tas_max=2):
         chaine de caractères qui représente le mode joué ('manuel' ou 'auto')
 
     :param nb_cartes:int
-        
+
 
     :param affiche:bool
 
     :param nb_tas_max:int
-    
+
     :return
     list
     """
@@ -306,32 +398,24 @@ def lance_reussite(mode, nb_cartes=32, affiche=False, nb_tas_max=2):
     return liste_tas
 
 
+##############  Creation de la barre de menu  ###############
+
+menu_bar = tk.Menu(fenetre)  # Creation de la barre de menu
+
+mode_menu = tk.Menu(menu_bar, tearoff=0)  # Creation d'un sous-menu dans la barre de menu
+mode_menu.add_command(label="Manuel", command=lambda: lance_reussite('manuel'))  # Ajout d'une commande dans le sous-menu precedent
+mode_menu.add_command(label="Automatique", command=lambda: lance_reussite('auto', affiche=True))  # Ajout d'une seconde commande dans le sous-menu precedent
+
+help_menu = tk.Menu(menu_bar, tearoff=0)  # Creation d'un second sous-menu dans la barre de menu
+help_menu.add_command(label="regle", command=lambda: webbrowser.open("https://projetinfomi3-bin08.wixsite.com/reussite_alliances-1/post/la-r%C3%A9ussite-des-alliances"))  # Ajout d'une commande dans le sous-menu precedent
+help_menu.add_command(label="aide", command=iat.aide)  # Ajout d'une seconde commande dans le sous-menu precedent
+
+menu_bar.add_cascade(label="Mode de jeu", menu=mode_menu)  # Ajout d'un sous menu en cascade dans la barre de menu
+menu_bar.add_cascade(label="help", menu=help_menu)  # Ajout d'un sous menu en cascade dans la barre de menu
+menu_bar.add_command(label="Statistiques", command= stat.conf_stat)
+menu_bar.add_command(label="Quitter", command=fenetre.destroy)  # Ajout d'une commande dans la barre de menu
+
+fenetre.config(menu=menu_bar)  # affichage de la barre de menu a l'ecran
+
 if __name__ == "__main__":
-    # afficher_reussite([{'valeur':7, 'couleur':'P'},{'valeur':10, 'couleur':'K'},{'valeur':'A', 'couleur':'T'}])
-    print(init_pioche_fichier("data_init.txt"))
-    # ecrire_fichier_reussite('teste.txt', [{'valeur': 'V', 'couleur': 'C'}, {'valeur': '8', 'couleur': 'P'},
-    #                                      {'valeur': 'V', 'couleur': 'K'}, {'valeur': 'A', 'couleur': 'C'},
-    #                                      {'valeur': '10', 'couleur': 'P'}, {'valeur': '8', 'couleur': 'T'},
-    #                                      {'valeur': '8', 'couleur': 'K'}, {'valeur': '9', 'couleur': 'T'},
-    #                                      {'valeur': 'V', 'couleur': 'P'}, {'valeur': 'A', 'couleur': 'P'},
-    #                                      {'valeur': '10', 'couleur': 'K'}, {'valeur': '9', 'couleur': 'P'},
-    #                                      {'valeur': '7', 'couleur': 'T'}, {'valeur': 'R', 'couleur': 'T'},
-    #                                      {'valeur': '10', 'couleur': 'C'}, {'valeur': '9', 'couleur': 'K'},
-    #                                      {'valeur': '9', 'couleur': 'C'}, {'valeur': 'D', 'couleur': 'T'},
-    #                                      {'valeur': 'R', 'couleur': 'C'}, {'valeur': '8', 'couleur': 'C'},
-    #                                      {'valeur': 'D', 'couleur': 'K'}, {'valeur': '7', 'couleur': 'C'},
-    #                                      {'valeur': 'A', 'couleur': 'T'}, {'valeur': '7', 'couleur': 'P'},
-    #                                      {'valeur': 'V', 'couleur': 'T'}, {'valeur': '7', 'couleur': 'K'},
-    #                                      {'valeur': 'D', 'couleur': 'C'}, {'valeur': 'A', 'couleur': 'K'},
-    #                                      {'valeur': 'D', 'couleur': 'P'}, {'valeur': '10', 'couleur': 'T'},
-    #                                      {'valeur': 'R', 'couleur': 'K'}, {'valeur': 'R', 'couleur': 'P'}])
-    # pioche = init_pioche_alea()
-    # print(alliance({'valeur': '7', 'couleur': 'K'}, {'valeur': 'A', 'couleur': 'K'}))
-    # liste = [{'valeur': '7', 'couleur': 'K'}, {'valeur': '8', 'couleur': 'P'}, {'valeur': 'A', 'couleur': 'K'}]
-    # print(liste)
-    # print(saut_si_possible(liste, 1))
-    # print(liste)
-    # une_etape_reussite(liste, pioche, affiche=True)
-    # afficher_reussite(reussite_mode_auto(pioche, affiche=True))
-    # reussite_mode_manuel(pioche)
-    afficher_reussite(lance_reussite('auto', affiche=True))
+    fenetre.mainloop()
