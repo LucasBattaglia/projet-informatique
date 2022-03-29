@@ -2,10 +2,6 @@
 
 # importation des bibliotheque de Python
 import random
-<<<<<<< HEAD
-#from time import *
-=======
->>>>>>> 404e03d0c1997f508dfd62c455e9372cf7171d10
 
 
 def carte_to_chaine(dic_carte):
@@ -192,12 +188,8 @@ def retourner_carte(liste_tas, pioche):
         liste de cartes visibles sur les tas de la réussite
 
     :param pioche:list
-<<<<<<< HEAD
         liste de cartes
-    
-=======
 
->>>>>>> 404e03d0c1997f508dfd62c455e9372cf7171d10
     :return
     None
     """
@@ -227,18 +219,10 @@ def une_etape_reussite(liste_tas, pioche, affiche=False):
     del pioche[0]
     if affiche:
         afficher_reussite(liste_tas)
-<<<<<<< HEAD
-        #sleep(2) # temps en plus pour lecture moins rapide
-=======
->>>>>>> 404e03d0c1997f508dfd62c455e9372cf7171d10
     saut = saut_si_possible(liste_tas, len(liste_tas) - 2)
     while saut:
         if affiche:
             afficher_reussite(liste_tas)
-<<<<<<< HEAD
-            #sleep(2)
-=======
->>>>>>> 404e03d0c1997f508dfd62c455e9372cf7171d10
         saut = verification_possible_saut(liste_tas)
 
 
@@ -253,10 +237,6 @@ def reussite_mode_auto(pioche, affiche=False):
     """
     if affiche:
         afficher_reussite(pioche)
-<<<<<<< HEAD
-        #sleep(2)
-=======
->>>>>>> 404e03d0c1997f508dfd62c455e9372cf7171d10
     pioche_tas = list(pioche)
     liste_tas = []
     while pioche_tas:
