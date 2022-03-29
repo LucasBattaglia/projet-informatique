@@ -1,4 +1,4 @@
-\documentclass{article}
+\documentclass[french, titlepage]{article}
 \usepackage[utf8]{inputenc}
 \usepackage[T1]{fontenc}
 \usepackage[french]{babel}
@@ -15,7 +15,9 @@
 
 
 \maketitle
+
 \tableofcontents
+
 \newpage
 
 
@@ -38,6 +40,37 @@
 \section{Partie Extension}    
     
     \subsection{Interface Graphique Tkinter}
+    
+        Tkinter est une interface graphique dite de bureau, c'est-à-dire qu'il permet de créer des applications tel que Word, Excel ou des petits jeux comme le solitaire ou la réussite.\\
+    
+    Chaque objet de Tkinter (boutons, texte menu, etc...) est appelé WIDGET.\\
+    A chaque fois l'on créer un WIDGET, il n'est pas afficher. On doit les afficher grâce à une des trois méthodes suivantes:\\
+    
+    \begin{itemize}
+    
+    \item .pack() : %underline 
+    Place le WIDGET dans l'espace sans utiliser de coordonnées.\\
+    On a la possibilité de placer notre WIDGET par l'ajout de l'argument size et par l'ajout d'une des valeurs suivantes.
+    
+    tkinter.CENTER  /  tkinter.BOTTOM  / tkinter.TOP  /  tkinter.LEFT  / tkinter.RIGHT
+    
+    Si, par la suite, on souhaite cacher le WIDGET, on utilisera la ligne de code : .pack$\_$forget()
+    \\
+    
+	\item .grid() : %underline
+    Place le WIDGET dans l'espace avec l'utilisation d'un semblant de coordonnées.\\
+    On prend deux arguments, column (colonne) et row (ligne), où l'on placera notre WIDGET.\\
+    Si la colonne et la ligne sont égales à 0, alors le widget sera dans le coin en haut à gauche.
+    Le nombre de colonnes et de lignes n'est pas défini, à chaque rajout de ligne et/ou de colonne l'écran se divise.\\
+    grid comprend aussi deux arguments supplémentaires mais optionnel : padx et pady, chaque correspondant à l'emplacement entre deux WIDGET, pour x et y.
+    \\
+    
+    \item .place() : %underline
+    Place le Widget dans l'espace en utilisant des coordonnées fixes et comprends deux arguments corrspondant aux coordonnées (x et y).\\
+    On peut, en plus, autiliser l'argument optionnel anchor, représentation des pooints cardinaux : N, E, S, W, NE, NW, SE, SW.
+    \\
+    \end{itemize}
+    
     \subsection{\ttfamily verifier-pioche}
     \subsection{Nombre moyen de tas}
         \subsubsection{\ttfamily res-multi-simulation}
@@ -45,7 +78,7 @@
     \subsection{Probabilité de gagner}
         \subsubsection{Graphique}
     \subsection{Interface graphique : Turtle}
-    \subsection{Amelioration du mélange}
+    \subsection{Amélioration du mélange}
         \subsubsection{\ttfamily meilleur-echange-consecutif}
         \subsubsection{Modification plus approfondie}
         
