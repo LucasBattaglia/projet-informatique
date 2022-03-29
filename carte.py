@@ -2,7 +2,6 @@
 
 # importation des bibliotheque de Python
 import random
-from time import *
 
 
 def carte_to_chaine(dic_carte):
@@ -70,7 +69,10 @@ def init_pioche_fichier(fichier_carte):
     fichier = fichier.split(" ")
     for carte in fichier:
         carte = carte.split("-")
-        liste.append({'valeur': carte[0], 'couleur': carte[1]})
+        if carte[0] == 'V' or carte[0] == 'D' or carte[0] == 'R' or carte[0] == 'A':
+            liste.append({'valeur': str(carte[0]), 'couleur': carte[1]})
+        else:
+            liste.append({'valeur': int(carte[0]), 'couleur': carte[1]})
     return liste
 
 
@@ -100,7 +102,7 @@ def init_pioche_alea(nb_carte=32):
     """
     Créer une liste de cartes en fonction du nombre de cartes demandé (32 ou 52) et mélange les cartes de façon
     aléatoire
-              
+
     :param nb_carte:int
         argument optionnel (valeur par défaut = 32 / autre valeur = 52)
 
@@ -111,9 +113,9 @@ def init_pioche_alea(nb_carte=32):
     liste_carte = []
     liste_couleur = ['C', 'K', 'P', 'T']
     if nb_carte == 32:
-        liste_valeur = ['7', '8', '9', '10', 'V', 'D', 'R', 'A']
+        liste_valeur = [7, 8, 9, 10, 'V', 'D', 'R', 'A']
     elif nb_carte == 52:
-        liste_valeur = ['A', '2', '3', '4', '5', '6', '7', '8', '9', '10', 'V', 'D', 'R']
+        liste_valeur = ['A', 2, 3, 4, 5, 6, 7, 8, 9, 10, 'V', 'D', 'R']
     for couleur in liste_couleur:
         for valeur in liste_valeur:
             liste_carte.append({'valeur': valeur, 'couleur': couleur})
@@ -143,12 +145,12 @@ def saut_si_possible(liste_tas, num_tas):
     Teste si saut possible,
         si oui : modification de la liste donnée en argument
     Teste si une modification a été effectué
-    
+
     :param liste_tas:list
         liste de cartes visibles sur les tas de la réussite
     :param num_tas:int
         numéro d'une carte du tas qui se trouve entre deux cartes de meme couleur ou de meme valeur
-              
+
     :return
     bool
         retour de booléen mais pas d'affichage
@@ -182,11 +184,11 @@ def verification_possible_saut(liste_tas):
 def retourner_carte(liste_tas, pioche):
     """
 
-    Suppression de la premiere carte de la liste de la pioche et ajout de cette meme carte dans la liste des tas 
+    Suppression de la premiere carte de la liste de la pioche et ajout de cette meme carte dans la liste des tas
 
     :param liste_tas:list
     :param pioche:list
-    
+
     :return
     None
     """
@@ -200,12 +202,12 @@ def une_etape_reussite(liste_tas, pioche, affiche=False):
 
     Selection de la premiere carte de la pioche, placement de cette carte dans la liste du tas de cartes et suppression de cette carte de la pioche
     Effectuer la vérification possible d'un saut
-    Tant que le saut est fait, 
-    Affichage de la réussite à chaque des étapes (sauts et pioche) 
-    
+    Tant que le saut est fait,
+    Affichage de la réussite à chaque des étapes (sauts et pioche)
+
     :param pioche:list
     :param affiche:bool
-    
+
     :return
     None
     """
@@ -214,12 +216,10 @@ def une_etape_reussite(liste_tas, pioche, affiche=False):
     del pioche[0]
     if affiche:
         afficher_reussite(liste_tas)
-        sleep(2) # temps en plus pour lecture moins rapide
     saut = saut_si_possible(liste_tas, len(liste_tas) - 2)
     while saut:
         if affiche:
             afficher_reussite(liste_tas)
-            sleep(2)
         saut = verification_possible_saut(liste_tas)
 
 
@@ -227,14 +227,13 @@ def reussite_mode_auto(pioche, affiche=False):
     """
     :param pioche:list
     :param affiche:bool
-    
+
     :return
     list
 
     """
     if affiche:
         afficher_reussite(pioche)
-        sleep(2)
     pioche_tas = list(pioche)
     liste_tas = []
     while pioche_tas:
@@ -246,7 +245,7 @@ def reussite_mode_manuel(pioche, nb_tas_max=2):
     """
     :param pioche:list
     :param nb_tas_max:int
-    
+
     :return
     list
     """
@@ -289,12 +288,12 @@ def lance_reussite(mode, nb_cartes=32, affiche=False, nb_tas_max=2):
         chaine de caractères qui représente le mode joué ('manuel' ou 'auto')
 
     :param nb_cartes:int
-        
+
 
     :param affiche:bool
 
     :param nb_tas_max:int
-    
+
     :return
     list
     """
@@ -305,6 +304,36 @@ def lance_reussite(mode, nb_cartes=32, affiche=False, nb_tas_max=2):
         liste_tas = reussite_mode_manuel(pioche, nb_tas_max)
     return liste_tas
 
+
+if __name__ == "__main__":
+    # afficher_reussite([{'valeur':7, 'couleur':'P'},{'valeur':10, 'couleur':'K'},{'valeur':'A', 'couleur':'T'}])
+    print(init_pioche_fichier("data_init.txt"))
+    # ecrire_fichier_reussite('teste.txt', [{'valeur': 'V', 'couleur': 'C'}, {'valeur': '8', 'couleur': 'P'},
+    #                                      {'valeur': 'V', 'couleur': 'K'}, {'valeur': 'A', 'couleur': 'C'},
+    #                                      {'valeur': '10', 'couleur': 'P'}, {'valeur': '8', 'couleur': 'T'},
+    #                                      {'valeur': '8', 'couleur': 'K'}, {'valeur': '9', 'couleur': 'T'},
+    #                                      {'valeur': 'V', 'couleur': 'P'}, {'valeur': 'A', 'couleur': 'P'},
+    #                                      {'valeur': '10', 'couleur': 'K'}, {'valeur': '9', 'couleur': 'P'},
+    #                                      {'valeur': '7', 'couleur': 'T'}, {'valeur': 'R', 'couleur': 'T'},
+    #                                      {'valeur': '10', 'couleur': 'C'}, {'valeur': '9', 'couleur': 'K'},
+    #                                      {'valeur': '9', 'couleur': 'C'}, {'valeur': 'D', 'couleur': 'T'},
+    #                                      {'valeur': 'R', 'couleur': 'C'}, {'valeur': '8', 'couleur': 'C'},
+    #                                      {'valeur': 'D', 'couleur': 'K'}, {'valeur': '7', 'couleur': 'C'},
+    #                                      {'valeur': 'A', 'couleur': 'T'}, {'valeur': '7', 'couleur': 'P'},
+    #                                      {'valeur': 'V', 'couleur': 'T'}, {'valeur': '7', 'couleur': 'K'},
+    #                                      {'valeur': 'D', 'couleur': 'C'}, {'valeur': 'A', 'couleur': 'K'},
+    #                                      {'valeur': 'D', 'couleur': 'P'}, {'valeur': '10', 'couleur': 'T'},
+    #                                      {'valeur': 'R', 'couleur': 'K'}, {'valeur': 'R', 'couleur': 'P'}])
+    # pioche = init_pioche_alea()
+    # print(alliance({'valeur': '7', 'couleur': 'K'}, {'valeur': 'A', 'couleur': 'K'}))
+    # liste = [{'valeur': '7', 'couleur': 'K'}, {'valeur': '8', 'couleur': 'P'}, {'valeur': 'A', 'couleur': 'K'}]
+    # print(liste)
+    # print(saut_si_possible(liste, 1))
+    # print(liste)
+    # une_etape_reussite(liste, pioche, affiche=True)
+    # afficher_reussite(reussite_mode_auto(pioche, affiche=True))
+    # reussite_mode_manuel(pioche)
+    afficher_reussite(lance_reussite('auto', affiche=True))
 
 if __name__ == "__main__":
     # afficher_reussite([{'valeur':7, 'couleur':'P'},{'valeur':10, 'couleur':'K'},{'valeur':'A', 'couleur':'T'}])
