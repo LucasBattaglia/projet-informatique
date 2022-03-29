@@ -51,11 +51,18 @@ list_bouton = []  # liste de dictionnaire nessaissaire a bouton ({'valeur'=…, 
 # Mode
 mode="MANUEL"
 
+message = tk.StringVar()
+message.set("Bienvenue")
+
 ###############  mise en page de la fenetre  ###############
 
 # Widget de Texte (tkinter.Label) affichant le titre en haut de la fenetre
 titre = tk.Label(fenetre, text="Réussite des alliances", font=("Ink Free", 20), bg=FOND, fg="Black")  # Generation du widget
 titre.grid(row=0, column=1, padx=5, pady=5)  # Affichage du widget
+
+    # Widget de Texte (tkinter.Label) affichant les message a l'utilisateur
+textmessage = tk.Label(fenetre, textvariable=message, font=("Ink Free", 20), bg=FOND, fg="Black")  # Generation du widget
+textmessage.grid(row=5, column=1, padx=5, pady=5)  # Affichage du widget
 
 # Zone de jeu (normalement zone de dessin: tkinter.Canvas) permettant de repartir les cartes dans la fenetre
 Canevas1 = tk.Canvas(fenetre, bg=FOND, height=hauteur_carte, highlightthickness=0)  # Creation d'un Canvas
@@ -347,6 +354,7 @@ def reussite_mode_manuel(pioche, nb_tas_max=2):
         action = input(
             "\n\n#######################################################\nRetourner une carte (taper 1)\nSaisir un "
             "saut (taper2)\nQuitter (taper Q)\n#######################################################\n\n\n")
+        message.set("")
         if action == '1':
             retourner_carte(liste_tas, pioche_tas)
         elif action == '2':
@@ -357,21 +365,21 @@ def reussite_mode_manuel(pioche, nb_tas_max=2):
             print("")
             afficher_reussite(liste_tas)
             num = int(input("Quel tas voulez-vous faire sauter (entrer un numero, on commence par 0): "))
-            if num>0 and num<len(liste_tas)-2:
+            if num>0 and num<len(liste_tas)-1:
                 possible = saut_si_possible(liste_tas, num)
                 if not possible:
-                    print('Impossible de faire sauter le tas numero {}'.format(num))
-                else:
-                    print('Impossible de faire ce saut')
+                    message.set('Impossible de faire sauter le tas numero {}'.format(num))
+            else:
+                message.set('Impossible de faire ce saut')
         elif action == 'Q':
             for carte in pioche_tas:
                 liste_tas.append(carte)
             pioche_tas = []
         afficher_reussite(liste_tas)
     if len(liste_tas) <= nb_tas_max:
-        print("Gagner")
+        message.set("Gagner")
     else:
-        print("Perdu")
+        message.set("Perdu")
     return liste_tas
 
 
@@ -390,6 +398,8 @@ def lance_reussite(mode, nb_cartes=32, affiche=False, nb_tas_max=2):
     :return
     list
     """
+    textmessage.config(fg="red")
+    message.set("")
     pioche = init_pioche_alea(nb_cartes)
     if mode == 'auto':
         liste_tas = reussite_mode_auto(pioche, affiche)
