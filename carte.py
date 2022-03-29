@@ -2,14 +2,13 @@
 
 # importation des bibliotheque de Python
 import random
-from time import *
+#from time import *
 
 
 def carte_to_chaine(dic_carte):
     """
     Transformation en chaine de caractère de dictionnaire modification apportée pour valeurs différentes de 10,
     rajout d'un espace devant
-
 
     :param dic_carte:dict
         Dictionnaire représentation de carte, valeur et couleur
@@ -111,9 +110,9 @@ def init_pioche_alea(nb_carte=32):
     liste_carte = []
     liste_couleur = ['C', 'K', 'P', 'T']
     if nb_carte == 32:
-        liste_valeur = ['7', '8', '9', '10', 'V', 'D', 'R', 'A']
+        liste_valeur = [7, 8, 9, 10, 'V', 'D', 'R', 'A']
     elif nb_carte == 52:
-        liste_valeur = ['A', '2', '3', '4', '5', '6', '7', '8', '9', '10', 'V', 'D', 'R']
+        liste_valeur = ['A', 2, 3, 4, 5, 6, 7, 8, 9, 10, 'V', 'D', 'R']
     for couleur in liste_couleur:
         for valeur in liste_valeur:
             liste_carte.append({'valeur': valeur, 'couleur': couleur})
@@ -166,7 +165,6 @@ def verification_possible_saut(liste_tas):
     """
     :param liste_tas:list
         liste de cartes visibles sur les tas de la réussite
-    :param liste_tas:list
         Representation de la premiere carte de chaque tas present sur la table
 
     :return
@@ -185,7 +183,10 @@ def retourner_carte(liste_tas, pioche):
     Suppression de la premiere carte de la liste de la pioche et ajout de cette meme carte dans la liste des tas 
 
     :param liste_tas:list
+        liste de cartes visibles sur les tas de la réussite
+
     :param pioche:list
+        liste de cartes
     
     :return
     None
@@ -204,6 +205,8 @@ def une_etape_reussite(liste_tas, pioche, affiche=False):
     Affichage de la réussite à chaque des étapes (sauts et pioche) 
     
     :param pioche:list
+        liste de cartes
+
     :param affiche:bool
     
     :return
@@ -214,12 +217,12 @@ def une_etape_reussite(liste_tas, pioche, affiche=False):
     del pioche[0]
     if affiche:
         afficher_reussite(liste_tas)
-        sleep(2) # temps en plus pour lecture moins rapide
+        #sleep(2) # temps en plus pour lecture moins rapide
     saut = saut_si_possible(liste_tas, len(liste_tas) - 2)
     while saut:
         if affiche:
             afficher_reussite(liste_tas)
-            sleep(2)
+            #sleep(2)
         saut = verification_possible_saut(liste_tas)
 
 
@@ -234,7 +237,7 @@ def reussite_mode_auto(pioche, affiche=False):
     """
     if affiche:
         afficher_reussite(pioche)
-        sleep(2)
+        #sleep(2)
     pioche_tas = list(pioche)
     liste_tas = []
     while pioche_tas:
