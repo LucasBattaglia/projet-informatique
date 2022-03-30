@@ -244,6 +244,56 @@ def reussite_mode_auto(pioche, affiche=False):
     return liste_tas
 
 
+def jeu(liste_tas, pioche_tas, quitter):
+    action = input(
+        "\n\n#######################################################\nRetourner une carte (taper 1)\nSaisir un "
+        "saut (taper2)\nQuitter (taper Q)\n#######################################################\n\n\n")
+    if action == '1':
+        retourner_carte(liste_tas, pioche_tas)
+    elif action == '2':
+        for i in range(len(liste_tas)):
+            if i < 10 or i % 10 == 0:
+                print(" ", end="")
+            print(' {} '.format(i), end='')
+        print("")
+        afficher_reussite(liste_tas)
+        num = int(input("Quel tas voulez-vous faire sauter (entrer un numero, on commence par 0): "))
+        possible = saut_si_possible(liste_tas, num)
+        if not possible:
+            print('Impossible de faire sauter le tas numero {}'.format(num))
+    elif action == 'Q':
+        for carte in pioche_tas:
+            liste_tas.append(carte)
+        pioche_tas = []
+        quitter = False
+    afficher_reussite(liste_tas)
+    return liste_tas, pioche_tas, quitter
+
+
+def jeuFin(liste_tas, pioche_tas, quitter):
+    action = input(
+        "\n\n#######################################################\nVous n'avez plus de carte (vous ne pourrez pas taper 1)\nSaisir un "
+        "saut (taper2)\nQuitter (taper Q)\n#######################################################\n\n\n")
+    if action == '2':
+        for i in range(len(liste_tas)):
+            if i < 10 or i % 10 == 0:
+                print(" ", end="")
+            print(' {} '.format(i), end='')
+        print("")
+        afficher_reussite(liste_tas)
+        num = int(input("Quel tas voulez-vous faire sauter (entrer un numero, on commence par 0): "))
+        possible = saut_si_possible(liste_tas, num)
+        if not possible:
+            print('Impossible de faire sauter le tas numero {}'.format(num))
+    elif action == 'Q':
+        for carte in pioche_tas:
+            liste_tas.append(carte)
+        pioche_tas = []
+        quitter = False
+    afficher_reussite(liste_tas)
+    return liste_tas, pioche_tas, quitter
+
+
 def reussite_mode_manuel(pioche, nb_tas_max=2):
     """
     :param pioche:list
@@ -253,31 +303,15 @@ def reussite_mode_manuel(pioche, nb_tas_max=2):
     list
     """
     # initialisation de variables
+    quitter = True
     liste_tas = []
     pioche_tas = list(pioche)
     # Programme de la fonction
-    while pioche_tas:
-        action = input(
-            "\n\n#######################################################\nRetourner une carte (taper 1)\nSaisir un "
-            "saut (taper2)\nQuitter (taper Q)\n#######################################################\n\n\n")
-        if action == '1':
-            retourner_carte(liste_tas, pioche_tas)
-        elif action == '2':
-            for i in range(len(liste_tas)):
-                if i < 10 or i % 10 == 0:
-                    print(" ", end="")
-                print(' {} '.format(i), end='')
-            print("")
-            afficher_reussite(liste_tas)
-            num = int(input("Quel tas voulez-vous faire sauter (entrer un numero, on commence par 0): "))
-            possible = saut_si_possible(liste_tas, num)
-            if not possible:
-                print('Impossible de faire sauter le tas numero {}'.format(num))
-        elif action == 'Q':
-            for carte in pioche_tas:
-                liste_tas.append(carte)
-            pioche_tas = []
-        afficher_reussite(liste_tas)
+    while (pioche_tas or len(liste_tas) != 2) and quitter:
+        if pioche_tas:
+            liste_tas, pioche_tas, quitter = jeu(liste_tas, pioche_tas, quitter)
+        else:
+            liste_tas, pioche_tas, quitter = jeuFin(liste_tas, pioche_tas, quitter)
     if len(liste_tas) <= nb_tas_max:
         print("Gagner")
     else:
@@ -366,4 +400,4 @@ if __name__ == "__main__":
     # une_etape_reussite(liste, pioche, affiche=True)
     # afficher_reussite(reussite_mode_auto(pioche, affiche=True))
     # reussite_mode_manuel(pioche)
-    afficher_reussite(lance_reussite('auto', affiche=True))
+    afficher_reussite(lance_reussite('manuel'))
