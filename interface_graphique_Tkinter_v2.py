@@ -80,6 +80,11 @@ Canevas4.grid(row=4, column=1, padx=5, pady=5)  # affichage du canvas
 ################  Definition des fonction  #################
 
 
+def import_Bouton():
+    from proc_affich import cree_bouton as pa
+
+
+
 def carte_to_chaine(dic_carte):
     """
     Transformation en chaine de caractère de dictionnaire modification apportée pour valeurs différentes de 10,
