@@ -2,13 +2,11 @@
 
 # importation des bibliotheque de Python
 import random
-from time import *
 import tkinter as tk
 import interface_aide_Tkinter as iat
 import statistique as stat
 import webbrowser
 from tkinter import ttk
-
 
 # Variable Global
 FOND = "green"  # couleur de fond de la fenetre (constante)
@@ -33,7 +31,7 @@ for c in couleurs:  # Pour chaque couleur ...
 
 v = random.choice(valeurs)
 c = random.choice(couleurs)
-fenetre.iconphoto(True, tk.PhotoImage(file="affichage/imgs/carte-{}-{}.gif".format(v,c)))
+fenetre.iconphoto(True, tk.PhotoImage(file="affichage/imgs/carte-{}-{}.gif".format(v, c)))
 
 # Entier
 comp_Can1 = 0  # Compte le nombre de carte dans le canvas 1
@@ -49,7 +47,7 @@ liste_Canevas4 = []  # liste de carte contenu dans le Canevas4
 list_bouton = []  # liste de dictionnaire nessaissaire a bouton ({'valeur'=…, 'couleur'=…, 'bouton'=…})
 
 # Mode
-mode="MANUEL"
+mode = "MANUEL"
 
 message = tk.StringVar()
 message.set("Bienvenue")
@@ -57,12 +55,14 @@ message.set("Bienvenue")
 ###############  mise en page de la fenetre  ###############
 
 # Widget de Texte (tkinter.Label) affichant le titre en haut de la fenetre
-titre = tk.Label(fenetre, text="Réussite des alliances", font=("Ink Free", 20), bg=FOND, fg="Black")  # Generation du widget
+titre = tk.Label(fenetre, text="Réussite des alliances", font=("Ink Free", 20), bg=FOND,
+                 fg="Black")  # Generation du widget
 titre.grid(row=0, column=1, padx=5, pady=5)  # Affichage du widget
 
-    # Widget de Texte (tkinter.Label) affichant les message a l'utilisateur
-textmessage = tk.Label(fenetre, textvariable=message, font=("Ink Free", 20), bg=FOND, fg="Black")  # Generation du widget
-textmessage.grid(row=5, column=1, padx=5, pady=5)  # Affichage du widget
+# Widget de Texte (tkinter.Label) affichant les message a l'utilisateur
+textmessage = tk.Label(fenetre, textvariable=message, font=("Ink Free", 20), bg=FOND,
+                       fg="Black")  # Generation du widget
+textmessage.grid(row=6, column=1, padx=5, pady=5)  # Affichage du widget
 
 # Zone de jeu (normalement zone de dessin: tkinter.Canvas) permettant de repartir les cartes dans la fenetre
 Canevas1 = tk.Canvas(fenetre, bg=FOND, height=hauteur_carte, highlightthickness=0)  # Creation d'un Canvas
@@ -77,12 +77,8 @@ Canevas3.grid(row=3, column=1, padx=5, pady=5)  # affichage du canvas
 Canevas4 = tk.Canvas(fenetre, bg=FOND, height=hauteur_carte, highlightthickness=0)  # Creation d'un Canvas
 Canevas4.grid(row=4, column=1, padx=5, pady=5)  # affichage du canvas
 
+
 ################  Definition des fonction  #################
-
-
-def import_Bouton():
-    from proc_affich import cree_bouton as pa
-
 
 
 def carte_to_chaine(dic_carte):
@@ -114,22 +110,22 @@ def carte_to_chaine(dic_carte):
     c = dic_carte['couleur']
     v = dic_carte['valeur']
     image = dic_photo[c, v]
-    if comp_Can1<nb_carte/4:
+    if comp_Can1 < nb_carte / 4:
         Button = ttk.Label(Canevas1, image=image, background=FOND)
         Button.pack(side=tk.LEFT)
-        comp_Can1+=1
-    elif comp_Can2<nb_carte/4:
+        comp_Can1 += 1
+    elif comp_Can2 < nb_carte / 4:
         Button = ttk.Label(Canevas2, image=image, background=FOND)
         Button.pack(side=tk.LEFT)
-        comp_Can2+=1
-    elif comp_Can3<nb_carte/4:
+        comp_Can2 += 1
+    elif comp_Can3 < nb_carte / 4:
         Button = ttk.Label(Canevas3, image=image, background=FOND)
         Button.pack(side=tk.LEFT)
-        comp_Can3+=1
-    elif comp_Can4<nb_carte/4:
+        comp_Can3 += 1
+    elif comp_Can4 < nb_carte / 4:
         Button = ttk.Label(Canevas4, image=image, background=FOND)
         Button.pack(side=tk.LEFT)
-        comp_Can4+=1
+        comp_Can4 += 1
 
 
 def afficher_reussite(liste_carte):
@@ -151,8 +147,7 @@ def afficher_reussite(liste_carte):
         comp_Can4 = 0
     for carte in liste_carte:
         carte_to_chaine(carte)
-    #sleep(0.1)
-
+    # sleep(0.1)
 
 
 def init_pioche_fichier(fichier_carte):
@@ -343,6 +338,74 @@ def reussite_mode_auto(pioche, affiche=False):
     return liste_tas
 
 
+def saut(nb_tas, liste_tas):
+    possible = saut_si_possible(liste_tas, nb_tas)
+    import_proc(liste_tas)
+    if not possible:
+        message.set("Impossible de faire sauter ce tas")
+
+
+def cree_bouton(carte, liste_carte):
+    global comp_Can1, comp_Can2, comp_Can4, comp_Can3
+    c = liste_carte[carte]['couleur']
+    v = liste_carte[carte]['valeur']
+    image = dic_photo[c, v]
+    if comp_Can1 < nb_carte / 4:
+        Button = tk.Button(Canevas1, image=image, background="green", command=lambda: saut(carte, liste_carte))
+        Button.pack(side=tk.LEFT)
+        comp_Can1 += 1
+    elif comp_Can2 < nb_carte / 4:
+        Button = tk.Button(Canevas2, image=image, background="green", command=lambda: saut(carte, liste_carte))
+        Button.pack(side=tk.LEFT)
+        comp_Can2 += 1
+    elif comp_Can3 < nb_carte / 4:
+        Button = tk.Button(Canevas3, image=image, background="green", command=lambda: saut(carte, liste_carte))
+        Button.pack(side=tk.LEFT)
+        comp_Can3 += 1
+    elif comp_Can4 < nb_carte / 4:
+        Button = tk.Button(Canevas4, image=image, background="green", command=lambda: saut(carte, liste_carte))
+        Button.pack(side=tk.LEFT)
+        comp_Can4 += 1
+
+
+def import_proc(liste_carte):
+    global comp_Can1, comp_Can2, comp_Can3, comp_Can4
+    for c in Canevas1.winfo_children():
+        c.destroy()
+        comp_Can1 = 0
+    for c in Canevas2.winfo_children():
+        c.destroy()
+        comp_Can2 = 0
+    for c in Canevas3.winfo_children():
+        c.destroy()
+        comp_Can3 = 0
+    for c in Canevas4.winfo_children():
+        c.destroy()
+        comp_Can4 = 0
+    for carte in range(len(liste_carte)):
+        cree_bouton(carte, liste_carte)
+
+
+def fpioche(liste_tas, pioche, bouton):
+    retourner_carte(liste_tas, pioche)
+    if not pioche:
+        bouton.grid_forget()
+    import_proc(liste_tas)
+
+
+quitter = True  # variable pour quitter (on quitte a false)
+
+
+def fTerminer(liste_tas, pioche, bPioche, bTerminer):
+    for carte in pioche:
+        liste_tas.append(carte)
+    pioche = []
+    bPioche.grid_forget()
+    bTerminer.grid_forget()
+    import_proc(liste_tas)
+    quitter = False
+
+
 def reussite_mode_manuel(pioche, nb_tas_max=2):
     """
     :param pioche:list
@@ -351,41 +414,18 @@ def reussite_mode_manuel(pioche, nb_tas_max=2):
     :return
     list
     """
+
     # initialisation de variables
     liste_tas = []
     pioche_tas = list(pioche)
-    # Programme de la fonction
-    while pioche_tas:
-        action = input(
-            "\n\n#######################################################\nRetourner une carte (taper 1)\nSaisir un "
-            "saut (taper2)\nQuitter (taper Q)\n#######################################################\n\n\n")
-        message.set("")
-        if action == '1':
-            retourner_carte(liste_tas, pioche_tas)
-        elif action == '2':
-            for i in range(len(liste_tas)):
-                if i < 10 or i % 10 == 0:
-                    print(" ", end="")
-                print(' {} '.format(i), end='')
-            print("")
-            afficher_reussite(liste_tas)
-            num = int(input("Quel tas voulez-vous faire sauter (entrer un numero, on commence par 0): "))
-            if num>0 and num<len(liste_tas)-1:
-                possible = saut_si_possible(liste_tas, num)
-                if not possible:
-                    message.set('Impossible de faire sauter le tas numero {}'.format(num))
-            else:
-                message.set('Impossible de faire ce saut')
-        elif action == 'Q':
-            for carte in pioche_tas:
-                liste_tas.append(carte)
-            pioche_tas = []
-        afficher_reussite(liste_tas)
-    if len(liste_tas) <= nb_tas_max:
-        message.set("Gagner")
-    else:
-        message.set("Perdu")
-    return liste_tas
+    # creation du bouton de pioche
+    bPioche = tk.Button(fenetre, image=dos, command=lambda: fpioche(liste_tas, pioche, bPioche))
+    bPioche.grid(column=1, row=5)
+    # Creation d'un bouton pour terminer (la partie)
+    quiter = tk.PhotoImage(file="affichage/imgs/Stop.png")
+    bTerminer = tk.Button(fenetre, image=quiter, bg="green",
+                          command=lambda: fTerminer(liste_tas, pioche, bPioche, bTerminer))
+    bTerminer.grid(column=2, row=1)
 
 
 def lance_reussite(mode, nb_cartes=32, affiche=False, nb_tas_max=2):
@@ -418,16 +458,19 @@ def lance_reussite(mode, nb_cartes=32, affiche=False, nb_tas_max=2):
 menu_bar = tk.Menu(fenetre)  # Creation de la barre de menu
 
 mode_menu = tk.Menu(menu_bar, tearoff=0)  # Creation d'un sous-menu dans la barre de menu
-mode_menu.add_command(label="Manuel", command=lambda: lance_reussite('manuel'))  # Ajout d'une commande dans le sous-menu precedent
-mode_menu.add_command(label="Automatique", command=lambda: lance_reussite('auto', affiche=True))  # Ajout d'une seconde commande dans le sous-menu precedent
+mode_menu.add_command(label="Manuel",
+                      command=lambda: lance_reussite('manuel'))  # Ajout d'une commande dans le sous-menu precedent
+mode_menu.add_command(label="Automatique", command=lambda: lance_reussite('auto',
+                                                                          affiche=True))  # Ajout d'une seconde commande dans le sous-menu precedent
 
 help_menu = tk.Menu(menu_bar, tearoff=0)  # Creation d'un second sous-menu dans la barre de menu
-help_menu.add_command(label="regle", command=lambda: webbrowser.open("https://projetinfomi3-bin08.wixsite.com/reussite_alliances-1/post/la-r%C3%A9ussite-des-alliances"))  # Ajout d'une commande dans le sous-menu precedent
+help_menu.add_command(label="regle", command=lambda: webbrowser.open(
+    "https://projetinfomi3-bin08.wixsite.com/reussite_alliances-1/post/la-r%C3%A9ussite-des-alliances"))  # Ajout d'une commande dans le sous-menu precedent
 help_menu.add_command(label="aide", command=iat.aide)  # Ajout d'une seconde commande dans le sous-menu precedent
 
 menu_bar.add_cascade(label="Mode de jeu", menu=mode_menu)  # Ajout d'un sous menu en cascade dans la barre de menu
 menu_bar.add_cascade(label="help", menu=help_menu)  # Ajout d'un sous menu en cascade dans la barre de menu
-menu_bar.add_command(label="Statistiques", command= stat.conf_stat)
+menu_bar.add_command(label="Statistiques", command=stat.conf_stat)
 menu_bar.add_command(label="Quitter", command=fenetre.destroy)  # Ajout d'une commande dans la barre de menu
 
 fenetre.config(menu=menu_bar)  # affichage de la barre de menu a l'ecran
