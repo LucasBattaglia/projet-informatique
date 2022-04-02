@@ -382,6 +382,7 @@ def import_proc(liste_carte):
     for c in Canevas4.winfo_children():
         c.destroy()
         comp_Can4 = 0
+    message.set("")
     for carte in range(len(liste_carte)):
         cree_bouton(carte, liste_carte)
 
@@ -391,9 +392,9 @@ def fpioche(liste_tas, pioche, bouton):
     if not pioche:
         bouton.grid_forget()
     import_proc(liste_tas)
+    if (not pioche) and len(liste_tas)==2:
+        message.set("Felicitation")
 
-
-quitter = True  # variable pour quitter (on quitte a false)
 
 
 def fTerminer(liste_tas, pioche, bPioche, bTerminer):
@@ -403,7 +404,12 @@ def fTerminer(liste_tas, pioche, bPioche, bTerminer):
     bPioche.grid_forget()
     bTerminer.grid_forget()
     import_proc(liste_tas)
-    quitter = False
+    if (not pioche) and len(liste_tas)==2:
+        bTerminer.grid_forget()
+    if len(liste_tas)==2:
+        message.set("Felicitation")
+    else:
+        message.set("PERDU")
 
 
 def reussite_mode_manuel(pioche, nb_tas_max=2):
@@ -419,13 +425,18 @@ def reussite_mode_manuel(pioche, nb_tas_max=2):
     liste_tas = []
     pioche_tas = list(pioche)
     # creation du bouton de pioche
-    bPioche = tk.Button(fenetre, image=dos, command=lambda: fpioche(liste_tas, pioche, bPioche))
+    bPioche = tk.Button(fenetre, image=dos, bg="green", command=lambda: fpioche(liste_tas, pioche, bPioche))
     bPioche.grid(column=1, row=5)
     # Creation d'un bouton pour terminer (la partie)
     quiter = tk.PhotoImage(file="affichage/imgs/Stop.png")
     bTerminer = tk.Button(fenetre, image=quiter, bg="green",
                           command=lambda: fTerminer(liste_tas, pioche, bPioche, bTerminer))
     bTerminer.grid(column=2, row=1)
+    print("Ok creation des bouton")
+    #  Boucle de jeu
+    while (pioche_tas or len(liste_tas) != 2) and quitter:
+        quitter=False
+        print("boucle")
 
 
 def lance_reussite(mode, nb_cartes=32, affiche=False, nb_tas_max=2):
@@ -445,6 +456,7 @@ def lance_reussite(mode, nb_cartes=32, affiche=False, nb_tas_max=2):
     """
     textmessage.config(fg="red")
     message.set("")
+    pioche = []
     pioche = init_pioche_alea(nb_cartes)
     if mode == 'auto':
         liste_tas = reussite_mode_auto(pioche, affiche)
